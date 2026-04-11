@@ -1,12 +1,12 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { Suspense, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { createBrowserClient } from '@supabase/auth-helpers-nextjs';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 
-export default function LoginPage(): JSX.Element {
+function LoginForm(): JSX.Element {
   const searchParams = useSearchParams();
   const redirect = searchParams.get('redirect') || '/app';
 
@@ -115,5 +115,13 @@ export default function LoginPage(): JSX.Element {
         )}
       </div>
     </div>
+  );
+}
+
+export default function LoginPage(): JSX.Element {
+  return (
+    <Suspense>
+      <LoginForm />
+    </Suspense>
   );
 }
