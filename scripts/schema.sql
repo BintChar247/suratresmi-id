@@ -16,15 +16,7 @@ CREATE TABLE public.organizations (
 
 ALTER TABLE public.organizations ENABLE ROW LEVEL SECURITY;
 
-CREATE POLICY "orgs_select_own" ON public.organizations
-  FOR SELECT USING (
-    id IN (SELECT org_id FROM public.users WHERE id = auth.uid())
-  );
-
-CREATE POLICY "orgs_admin_all" ON public.organizations
-  FOR SELECT USING (
-    EXISTS (SELECT 1 FROM public.users WHERE id = auth.uid() AND plan = 'admin')
-  );
+-- NOTE: orgs policies reference public.users, so they are added AFTER users table below.
 
 CREATE INDEX idx_organizations_plan ON public.organizations(plan);
 
@@ -56,6 +48,17 @@ CREATE POLICY "users_admin_all" ON public.users
   );
 
 CREATE INDEX idx_users_org_id ON public.users(org_id);
+
+-- organizations policies (deferred — required public.users to exist first)
+CREATE POLICY "orgs_select_own" ON public.organizations
+  FOR SELECT USING (
+    id IN (SELECT org_id FROM public.users WHERE id = auth.uid())
+  );
+
+CREATE POLICY "orgs_admin_all" ON public.organizations
+  FOR SELECT USING (
+    EXISTS (SELECT 1 FROM public.users WHERE id = auth.uid() AND plan = 'admin')
+  );
 
 -- ============================================================
 -- Table 3: letters (generated letter records)
