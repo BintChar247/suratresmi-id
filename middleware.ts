@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { createServerClient } from '@supabase/auth-helpers-nextjs';
 
 // Rate limiting: buckets are keyed by "<ip>:<endpoint_bucket>"
 // /api/generate gets a stricter limit (20/min); all other API routes share 10/min.
@@ -8,10 +9,10 @@ const GENERATE_LIMIT = 20; // IP-level limit (per-user limit is enforced inside 
 
 const ipRequests = new Map<string, { count: number; resetTime: number }>();
 
-export function middleware(request: NextRequest): NextResponse {
+export async function middleware(request: NextRequest): Promise<NextResponse> {
   const { pathname } = request.nextUrl;
 
-  // Skip rate limiting for static assets and Next.js internals
+  // Skip for static assets and Next.js internals
   if (
     pathname.startsWith('/_next') ||
     /\.(jpg|jpeg|png|gif|ico|css|js|woff2?)$/.test(pathname)
@@ -19,42 +20,75 @@ export function middleware(request: NextRequest): NextResponse {
     return NextResponse.next();
   }
 
+  const response = NextResponse.next({ request: { headers: request.headers } });
+
+  // Refresh session on every request so it doesn't expire
+  const supabase = createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        getAll: () => request.cookies.getAll(),
+        setAll: (cookiesToSet) => {
+          cookiesToSet.forEach(({ name, value, options }) =>
+            response.cookies.set(name, value, options)
+          );
+        },
+      },
+    }
+  );
+  const { data: { session } } = await supabase.auth.getSession();
+
+  // Check for session — also accept raw sb- cookie as fallback (handles token refresh edge cases)
+  const hasSessionCookie = request.cookies.getAll().some(c => c.name.startsWith('sb-'));
+  const isAuthenticated = !!session || hasSessionCookie;
+
+  // Redirect unauthenticated users from /app to login
+  if (pathname.startsWith('/app') && !isAuthenticated) {
+    const loginUrl = new URL('/auth/login', request.url);
+    loginUrl.searchParams.set('redirect', pathname);
+    return NextResponse.redirect(loginUrl);
+  }
+
+  // Rate limiting
   const ip =
     request.headers.get('x-forwarded-for')?.split(',')[0].trim() ??
     request.headers.get('x-real-ip') ??
     'unknown';
 
   const isGenerate = pathname.startsWith('/api/generate');
-  const bucketKey = `${ip}:${isGenerate ? 'generate' : 'api'}`;
-  const limit = isGenerate ? GENERATE_LIMIT : DEFAULT_LIMIT;
-  const now = Date.now();
+  const isApiRoute = pathname.startsWith('/api/');
 
-  const record = ipRequests.get(bucketKey);
-  if (record && now < record.resetTime) {
-    record.count++;
-    if (record.count > limit) {
-      return new NextResponse(
-        JSON.stringify({ error: 'Terlalu banyak permintaan. Coba lagi dalam 1 menit.' }),
-        { status: 429, headers: { 'Content-Type': 'application/json' } }
-      );
+  if (isApiRoute) {
+    const bucketKey = `${ip}:${isGenerate ? 'generate' : 'api'}`;
+    const limit = isGenerate ? GENERATE_LIMIT : DEFAULT_LIMIT;
+    const now = Date.now();
+
+    const record = ipRequests.get(bucketKey);
+    if (record && now < record.resetTime) {
+      record.count++;
+      if (record.count > limit) {
+        return new NextResponse(
+          JSON.stringify({ error: 'Terlalu banyak permintaan. Coba lagi dalam 1 menit.' }),
+          { status: 429, headers: { 'Content-Type': 'application/json' } }
+        );
+      }
+    } else {
+      ipRequests.set(bucketKey, { count: 1, resetTime: now + RATE_LIMIT_WINDOW });
     }
-  } else {
-    ipRequests.set(bucketKey, { count: 1, resetTime: now + RATE_LIMIT_WINDOW });
+
+    // Protect /api/generate and /api/payment — require session
+    if (isGenerate || pathname.startsWith('/api/payment')) {
+      if (!isAuthenticated) {
+        return new NextResponse(
+          JSON.stringify({ error: 'Unauthorized' }),
+          { status: 401, headers: { 'Content-Type': 'application/json' } }
+        );
+      }
+    }
   }
 
-  // Protect /api/generate and /api/payment — require a Supabase session cookie.
-  // The route itself validates the Bearer token; this is a quick early-exit guard.
-  if (isGenerate || pathname.startsWith('/api/payment')) {
-    const cookieHeader = request.headers.get('cookie') ?? '';
-    if (!cookieHeader.includes('sb-')) {
-      return new NextResponse(
-        JSON.stringify({ error: 'Unauthorized' }),
-        { status: 401, headers: { 'Content-Type': 'application/json' } }
-      );
-    }
-  }
-
-  return NextResponse.next();
+  return response;
 }
 
 export const config = {

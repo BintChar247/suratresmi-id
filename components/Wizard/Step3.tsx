@@ -1,11 +1,13 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
-import { getSession } from '@/lib/auth';
+import { useAuth } from '@/lib/auth-context';
 import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
 import { SkeletonInput } from '@/components/ui/Skeleton';
+import { AuthWall } from '@/components/AuthWall';
 import { ChevronLeft } from 'lucide-react';
 
 interface FieldDef {
@@ -24,6 +26,8 @@ interface Step3Props {
 }
 
 export function WizardStep3({ subtype, onNext, onPrev }: Step3Props): JSX.Element {
+  const { user, accessToken } = useAuth();
+  const router = useRouter();
   const [fields, setFields] = useState<FieldDef[]>([]);
   const [templateName, setTemplateName] = useState('');
   const [formData, setFormData] = useState<Record<string, string>>({});
@@ -69,16 +73,16 @@ export function WizardStep3({ subtype, onNext, onPrev }: Step3Props): JSX.Elemen
     setApiError(null);
 
     try {
-      const session = await getSession();
-      if (!session?.access_token) {
-        throw new Error('Sesi tidak valid. Silakan login lagi.');
+      if (!user || !accessToken) {
+        router.push(`/auth/login?redirect=/app`);
+        return;
       }
 
       const response = await fetch('/api/generate', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${session.access_token}`,
+          Authorization: `Bearer ${accessToken}`,
         },
         body: JSON.stringify({ subtype, fields: formData }),
       });
@@ -99,6 +103,7 @@ export function WizardStep3({ subtype, onNext, onPrev }: Step3Props): JSX.Elemen
   };
 
   return (
+    <AuthWall>
     <form onSubmit={(e) => void handleSubmit(e)} className="space-y-6">
       <div>
         <button
@@ -160,5 +165,6 @@ export function WizardStep3({ subtype, onNext, onPrev }: Step3Props): JSX.Elemen
         </Button>
       )}
     </form>
+    </AuthWall>
   );
 }
