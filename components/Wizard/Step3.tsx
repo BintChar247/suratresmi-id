@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
+import { getSession } from '@/lib/auth';
 import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
 import { SkeletonInput } from '@/components/ui/Skeleton';
@@ -68,20 +69,30 @@ export function WizardStep3({ subtype, onNext, onPrev }: Step3Props): JSX.Elemen
     setApiError(null);
 
     try {
+      const session = await getSession();
+      if (!session?.access_token) {
+        throw new Error('Sesi tidak valid. Silakan login lagi.');
+      }
+
       const response = await fetch('/api/generate', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${session.access_token}`,
+        },
         body: JSON.stringify({ subtype, fields: formData }),
       });
 
       if (!response.ok) {
-        throw new Error('Gagal membuat surat');
+        const errorData = (await response.json()) as { error?: string };
+        throw new Error(errorData.error || 'Gagal membuat surat');
       }
 
       const { letter } = (await response.json()) as { letter: string };
       onNext({ formData, generatedLetter: letter });
-    } catch {
-      setApiError('Terjadi kesalahan saat membuat surat. Coba lagi.');
+    } catch (error) {
+      const message = error instanceof Error ? error.message : 'Terjadi kesalahan saat membuat surat. Coba lagi.';
+      setApiError(message);
     } finally {
       setLoading(false);
     }
