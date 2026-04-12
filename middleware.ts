@@ -38,10 +38,7 @@ export async function middleware(request: NextRequest): Promise<NextResponse> {
     }
   );
   const { data: { session } } = await supabase.auth.getSession();
-
-  // Check for session — also accept raw sb- cookie as fallback (handles token refresh edge cases)
-  const hasSessionCookie = request.cookies.getAll().some(c => c.name.startsWith('sb-'));
-  const isAuthenticated = !!session || hasSessionCookie;
+  const isAuthenticated = !!session;
 
   // Redirect unauthenticated users from /app to login
   if (pathname.startsWith('/app') && !isAuthenticated) {

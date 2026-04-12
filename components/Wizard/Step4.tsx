@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/Button';
+import { useAuth } from '@/lib/auth-context';
 import { ChevronLeft, Download, RefreshCw, CheckCircle, AlertTriangle } from 'lucide-react';
 
 interface Step4Props {
@@ -11,6 +12,7 @@ interface Step4Props {
 }
 
 export function WizardStep4({ letter, onPrev, onRestart }: Step4Props): JSX.Element {
+  const { accessToken } = useAuth();
   const [downloading, setDownloading] = useState(false);
   const [downloadError, setDownloadError] = useState<string | null>(null);
 
@@ -18,9 +20,16 @@ export function WizardStep4({ letter, onPrev, onRestart }: Step4Props): JSX.Elem
     setDownloading(true);
     setDownloadError(null);
     try {
+      if (!accessToken) {
+        throw new Error('Sesi tidak valid. Silakan masuk ulang.');
+      }
+
       const response = await fetch('/api/pdf', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${accessToken}`,
+        },
         body: JSON.stringify({ letter }),
       });
 
