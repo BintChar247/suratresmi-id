@@ -5,7 +5,7 @@ import './globals.css';
 export const metadata: Metadata = {
   title: 'SuratResmi.Online — Pembuat Surat Resmi Online',
   description: 'Buat surat kuasa, perjanjian, dan dokumen resmi dalam 30 detik.',
-  icons: { icon: '/favicon.ico' },
+  icons: { icon: '/logo-icon.svg' },
 };
 
 export const viewport: Viewport = {

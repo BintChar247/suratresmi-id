@@ -1,11 +1,18 @@
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export function Footer(): JSX.Element {
   return (
     <footer className="border-t border-gray-100 bg-white px-4 py-6 mt-auto">
-      <div className="max-w-lg mx-auto text-center space-y-2">
-        <p className="text-sm font-semibold text-gray-700">SuratResmi.Online</p>
+      <div className="max-w-5xl mx-auto text-center space-y-3">
+        <Image
+          src="/logo.svg"
+          alt="SuratResmi.Online"
+          width={160}
+          height={40}
+          className="h-7 w-auto mx-auto"
+        />
         <p className="text-xs text-gray-400">
           Dokumen dibuat oleh AI. Bukan pengganti konsultasi hukum profesional.
         </p>
