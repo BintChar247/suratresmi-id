@@ -3,8 +3,8 @@ export const config = {
     url: process.env.NEXT_PUBLIC_SUPABASE_URL!,
     anonKey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
   },
-  anthropic: {
-    apiKey: process.env.ANTHROPIC_API_KEY!,
+  gemini: {
+    apiKey: process.env.GOOGLE_AI_API_KEY!,
   },
   midtrans: {
     serverKey: process.env.MIDTRANS_SERVER_KEY!,

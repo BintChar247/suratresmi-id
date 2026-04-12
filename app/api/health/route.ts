@@ -1,13 +1,32 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { supabaseAdmin } from '@/lib/supabaseAdmin';
 
-export async function GET(): Promise<NextResponse> {
+export async function GET(request: NextRequest): Promise<NextResponse> {
+  // Authenticate via Bearer token to prevent info disclosure
+  const authHeader = request.headers.get('authorization');
+  if (!authHeader?.startsWith('Bearer ')) {
+    return NextResponse.json(
+      { status: 'ok' }, // Generic response for unauthenticated requests
+      { status: 200 }
+    );
+  }
+
+  const token = authHeader.slice(7);
+  const { data: { user }, error: authError } = await supabaseAdmin.auth.getUser(token);
+
+  if (authError || !user) {
+    return NextResponse.json(
+      { status: 'ok' },
+      { status: 200 }
+    );
+  }
+
+  // Only authenticated users get detailed health info
   const checks: Record<string, boolean> = {
     api: true,
     database: false,
   };
 
-  // Lightweight DB ping
   try {
     const { error } = await supabaseAdmin
       .from('templates')

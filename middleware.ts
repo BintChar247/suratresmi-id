@@ -50,13 +50,19 @@ export async function middleware(request: NextRequest): Promise<NextResponse> {
     return NextResponse.redirect(loginUrl);
   }
 
-  // Rate limiting
-  const ip =
-    request.headers.get('x-forwarded-for')?.split(',')[0].trim() ??
-    request.headers.get('x-real-ip') ??
-    'unknown';
+  // Rate limiting — extract rightmost IP from x-forwarded-for to prevent spoofing
+  let ip = 'unknown';
+  const xForwardedFor = request.headers.get('x-forwarded-for');
+  if (xForwardedFor) {
+    // Take rightmost IP (closest to our server) when behind trusted proxies
+    const ips = xForwardedFor.split(',').map(i => i.trim());
+    ip = ips[ips.length - 1];
+  } else {
+    ip = request.headers.get('x-real-ip') ?? 'unknown';
+  }
 
   const isGenerate = pathname.startsWith('/api/generate');
+  const isPdf = pathname.startsWith('/api/pdf');
   const isApiRoute = pathname.startsWith('/api/');
 
   if (isApiRoute) {
@@ -77,8 +83,8 @@ export async function middleware(request: NextRequest): Promise<NextResponse> {
       ipRequests.set(bucketKey, { count: 1, resetTime: now + RATE_LIMIT_WINDOW });
     }
 
-    // Protect /api/generate and /api/payment — require session
-    if (isGenerate || pathname.startsWith('/api/payment')) {
+    // Protect /api/generate, /api/pdf, and /api/payment — require session
+    if (isGenerate || isPdf || pathname.startsWith('/api/payment')) {
       if (!isAuthenticated) {
         return new NextResponse(
           JSON.stringify({ error: 'Unauthorized' }),

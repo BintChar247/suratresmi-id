@@ -5,10 +5,11 @@ import { useSearchParams } from 'next/navigation';
 import { createBrowserClient } from '@supabase/auth-helpers-nextjs';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
+import { getValidRedirect } from '@/lib/redirect-validation';
 
 function LoginForm(): JSX.Element {
   const searchParams = useSearchParams();
-  const redirect = searchParams.get('redirect') || '/app';
+  const redirect = getValidRedirect(searchParams.get('redirect'));
 
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);

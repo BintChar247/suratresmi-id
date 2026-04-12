@@ -1,11 +1,12 @@
 import { createServerClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
+import { getValidRedirect } from '@/lib/redirect-validation';
 
 export async function GET(request: NextRequest): Promise<NextResponse> {
   const requestUrl = new URL(request.url);
   const code = requestUrl.searchParams.get('code');
-  const redirect = requestUrl.searchParams.get('redirect') || '/app';
+  const redirect = getValidRedirect(requestUrl.searchParams.get('redirect'));
 
   if (code) {
     const cookieStore = cookies();
