@@ -59,7 +59,6 @@ export async function middleware(request: NextRequest): Promise<NextResponse> {
   }
 
   const isGenerate = pathname.startsWith('/api/generate');
-  const isPdf = pathname.startsWith('/api/pdf');
   const isApiRoute = pathname.startsWith('/api/');
 
   if (isApiRoute) {
@@ -79,16 +78,8 @@ export async function middleware(request: NextRequest): Promise<NextResponse> {
     } else {
       ipRequests.set(bucketKey, { count: 1, resetTime: now + RATE_LIMIT_WINDOW });
     }
-
-    // Protect /api/generate, /api/pdf, and /api/payment — require session
-    if (isGenerate || isPdf || pathname.startsWith('/api/payment')) {
-      if (!isAuthenticated) {
-        return new NextResponse(
-          JSON.stringify({ error: 'Unauthorized' }),
-          { status: 401, headers: { 'Content-Type': 'application/json' } }
-        );
-      }
-    }
+    // Auth for API routes is handled by each route handler (Bearer token validation).
+    // Middleware only enforces IP-level rate limiting here.
   }
 
   return response;
