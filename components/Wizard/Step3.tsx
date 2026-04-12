@@ -32,6 +32,7 @@ export function WizardStep3({ subtype, onNext, onPrev }: Step3Props): JSX.Elemen
   const [templateName, setTemplateName] = useState('');
   const [formData, setFormData] = useState<Record<string, string>>({});
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [jumlahSaksi, setJumlahSaksi] = useState('2');
   const [loading, setLoading] = useState(false);
   const [loadingFields, setLoadingFields] = useState(true);
   const [apiError, setApiError] = useState<string | null>(null);
@@ -84,7 +85,7 @@ export function WizardStep3({ subtype, onNext, onPrev }: Step3Props): JSX.Elemen
           'Content-Type': 'application/json',
           Authorization: `Bearer ${accessToken}`,
         },
-        body: JSON.stringify({ subtype, fields: formData }),
+        body: JSON.stringify({ subtype, fields: { ...formData, jumlah_saksi: jumlahSaksi } }),
       });
 
       if (!response.ok) {
@@ -152,6 +153,28 @@ export function WizardStep3({ subtype, onNext, onPrev }: Step3Props): JSX.Elemen
           }}
         />
       ))}
+
+      {/* Saksi-Saksi (optional) */}
+      {!loadingFields && fields.length > 0 && (
+        <div className="flex flex-col gap-1">
+          <label htmlFor="jumlah-saksi" className="text-sm font-semibold text-gray-700">
+            Saksi-Saksi (opsional)
+          </label>
+          <select
+            id="jumlah-saksi"
+            value={jumlahSaksi}
+            onChange={(e) => setJumlahSaksi(e.target.value)}
+            className="px-4 py-3 border border-gray-300 rounded-lg text-base transition-colors focus:outline-none focus:border-primary-500 focus:ring-2 focus:ring-primary-200 min-h-[2.75rem] bg-white"
+          >
+            <option value="0">Tanpa saksi</option>
+            <option value="1">1 saksi</option>
+            <option value="2">2 saksi</option>
+          </select>
+          <p className="text-sm text-gray-500">
+            Jumlah saksi yang akan menandatangani surat
+          </p>
+        </div>
+      )}
 
       {apiError && (
         <div className="bg-danger-50 border border-danger-200 rounded-lg p-4 text-danger-700 text-sm">

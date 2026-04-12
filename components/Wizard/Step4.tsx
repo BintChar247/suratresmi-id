@@ -13,8 +13,10 @@ interface Step4Props {
 
 export function WizardStep4({ letter, onPrev, onRestart }: Step4Props): JSX.Element {
   const { accessToken } = useAuth();
+  const [editedLetter, setEditedLetter] = useState(letter);
   const [downloading, setDownloading] = useState(false);
   const [downloadError, setDownloadError] = useState<string | null>(null);
+  const isEdited = editedLetter !== letter;
 
   const handleDownloadPDF = async (): Promise<void> => {
     setDownloading(true);
@@ -30,7 +32,7 @@ export function WizardStep4({ letter, onPrev, onRestart }: Step4Props): JSX.Elem
           'Content-Type': 'application/json',
           Authorization: `Bearer ${accessToken}`,
         },
-        body: JSON.stringify({ letter }),
+        body: JSON.stringify({ letter: editedLetter }),
       });
 
       if (!response.ok) throw new Error('Gagal mengunduh PDF');
@@ -60,11 +62,19 @@ export function WizardStep4({ letter, onPrev, onRestart }: Step4Props): JSX.Elem
         </p>
       </div>
 
-      {/* Letter preview */}
-      <div className="bg-gray-50 p-6 rounded-lg border border-gray-200 max-h-96 overflow-y-auto">
-        <pre className="text-sm text-gray-800 font-serif whitespace-pre-wrap leading-relaxed">
-          {letter}
-        </pre>
+      {/* Editable letter preview */}
+      <div className="relative">
+        {isEdited && (
+          <span className="absolute top-2 right-2 text-xs text-primary-600 bg-primary-50 px-2 py-0.5 rounded-full">
+            Diubah
+          </span>
+        )}
+        <textarea
+          value={editedLetter}
+          onChange={(e) => setEditedLetter(e.target.value)}
+          className="w-full min-h-[24rem] bg-gray-50 p-6 rounded-lg border border-gray-200 text-sm text-gray-800 font-serif leading-relaxed resize-y focus:outline-none focus:ring-2 focus:ring-primary-300 focus:border-primary-400"
+          spellCheck={false}
+        />
       </div>
 
       {/* Disclaimer */}

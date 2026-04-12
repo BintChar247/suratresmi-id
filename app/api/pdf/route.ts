@@ -388,29 +388,18 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       format:      'a4',
     });
 
-    const pageW = doc.internal.pageSize.getWidth();
-    const pageH = doc.internal.pageSize.getHeight();
-
     const writer = new PDFWriter(doc);
     renderMarkdownToPDF(writer, body.letter);
+
+    // Add page numbers + paraf box on every page
+    addFooters(doc);
 
     if (body.isFreeUser) {
       addWatermark(doc, 'DRAF - SuratResmi.id');
     }
 
     if (body.requiresMaterai) {
-      const lastPage = doc.getNumberOfPages();
-      doc.setPage(lastPage);
-      doc.setFontSize(SIZE.small);
-      doc.setFont(FONT_FAMILY, 'italic');
-      doc.setTextColor(100, 100, 100);
-      doc.text(
-        '[Tempat Materai Rp 10.000]',
-        pageW - MARGIN,
-        pageH - MARGIN - 8,
-        { align: 'right' }
-      );
-      doc.setTextColor(0, 0, 0);
+      addMateraiBox(doc);
     }
 
     const pdfData = doc.output('arraybuffer');
@@ -425,6 +414,87 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   } catch (error) {
     console.error('PDF generation error:', error);
     return NextResponse.json({ error: 'Failed to generate PDF' }, { status: 500 });
+  }
+}
+
+// ─── Materai box — page 1, top-right ──────────────────────────────────────────
+// Physical e-materai is roughly 30 × 40 mm. We draw a dashed-border box with a
+// label so the user knows where to affix the stamp.
+
+function addMateraiBox(doc: jsPDF): void {
+  const pageW = doc.internal.pageSize.getWidth();
+
+  doc.setPage(1); // materai goes on the first page
+
+  const pageH  = doc.internal.pageSize.getHeight();
+  const boxW   = 33;  // 28.95mm stamp (landscape) + 4mm margin
+  const boxH   = 25;  // 21mm stamp (landscape) + 4mm margin
+  const boxX   = pageW - MARGIN - boxW;
+  const boxY   = pageH - MARGIN - boxH; // bottom-right
+
+  // Solid gray border — visible at all zoom levels
+  doc.setDrawColor(100, 100, 100);
+  doc.setLineWidth(0.5);
+  doc.rect(boxX, boxY, boxW, boxH);
+
+  // Inner guide lines (light) to frame the stamp placement
+  doc.setDrawColor(180, 180, 180);
+  doc.setLineWidth(0.2);
+  const inset = 2;
+  doc.rect(boxX + inset, boxY + inset, boxW - 2 * inset, boxH - 2 * inset);
+
+  // Label text
+  doc.setFont(FONT_FAMILY, 'italic');
+  doc.setFontSize(7);
+  doc.setTextColor(130, 130, 130);
+  doc.text('Materai', boxX + boxW / 2, boxY + boxH / 2 - 2, { align: 'center' });
+  doc.text('Rp 10.000', boxX + boxW / 2, boxY + boxH / 2 + 2, { align: 'center' });
+
+  // Reset
+  doc.setTextColor(0, 0, 0);
+  doc.setDrawColor(0, 0, 0);
+}
+
+// ─── Page footers: pagination + paraf ─────────────────────────────────────────
+
+function addFooters(doc: jsPDF): void {
+  const pageW     = doc.internal.pageSize.getWidth();
+  const pageH     = doc.internal.pageSize.getHeight();
+  const pageCount = doc.getNumberOfPages();
+  const footerY   = pageH - 12; // 12 mm from bottom edge
+
+  for (let i = 1; i <= pageCount; i++) {
+    doc.setPage(i);
+
+    // ── Page number: centered ────────────────────────────────────────────
+    doc.setFont(FONT_FAMILY, 'normal');
+    doc.setFontSize(SIZE.small);
+    doc.setTextColor(120, 120, 120);
+    doc.text(
+      `Halaman ${i} dari ${pageCount}`,
+      pageW / 2,
+      footerY,
+      { align: 'center' },
+    );
+
+    // ── Paraf box: bottom-right ──────────────────────────────────────────
+    const boxW = 25;
+    const boxH = 12;
+    const boxX = pageW - MARGIN - boxW;
+    const boxY = footerY - boxH + 2;
+
+    doc.setDrawColor(160, 160, 160);
+    doc.setLineWidth(0.3);
+    doc.rect(boxX, boxY, boxW, boxH);
+
+    doc.setFontSize(7);
+    doc.setFont(FONT_FAMILY, 'normal');
+    doc.setTextColor(140, 140, 140);
+    doc.text('Paraf:', boxX + 1.5, boxY + 3.5);
+
+    // Reset
+    doc.setTextColor(0, 0, 0);
+    doc.setDrawColor(0, 0, 0);
   }
 }
 
