@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { createHash } from 'crypto';
 import { supabaseAdmin } from '@/lib/supabaseAdmin';
 
 /**
@@ -74,6 +75,5 @@ export async function DELETE(request: NextRequest): Promise<NextResponse> {
 
 /** One-way hash for audit trail (we keep proof of erasure without storing the email) */
 function hashEmail(email: string): string {
-  const { createHash } = require('crypto') as typeof import('crypto');
   return createHash('sha256').update(email.toLowerCase().trim()).digest('hex').substring(0, 16);
 }
