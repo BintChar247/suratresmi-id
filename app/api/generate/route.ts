@@ -226,11 +226,13 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
   // 6. Check user credits — auto-create the public.users row if missing
   //    (fallback for users who signed up before the handle_new_user trigger was installed)
-  let { data: userData, error: userError } = await supabaseAdmin
+  const { data: initialUserData, error: userError } = await supabaseAdmin
     .from('users')
     .select('credits')
     .eq('id', userId)
     .single();
+
+  let userData = initialUserData;
 
   if (userError || !userData) {
     // Row missing: provision it now with 3 starter credits
