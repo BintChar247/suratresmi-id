@@ -3,6 +3,7 @@ import Anthropic from '@anthropic-ai/sdk';
 import { supabaseAdmin } from '@/lib/supabaseAdmin';
 import { checkUserRateLimit } from '@/lib/rateLimit';
 import { sanitizeInput } from '@/lib/security';
+import { encrypt, encryptJSON } from '@/lib/encryption';
 
 // ─── Constants ───────────────────────────────────────────────────────────────
 
@@ -333,7 +334,7 @@ Jangan sertakan komentar, metadata, atau penjelasan tambahan. Hanya tulis isi su
       metadata: {
         subtype,
         reason: outputCheck.reason,
-        sample: generatedText.substring(0, 300),
+        // PII redacted — do not log letter content or user input
       },
     });
     return NextResponse.json(
@@ -376,8 +377,8 @@ Jangan sertakan komentar, metadata, atau penjelasan tambahan. Hanya tulis isi su
     user_id: userId,
     type: letterType,
     subtype_id: subtype,
-    content: generatedText,
-    input_data: sanitizedFields,
+    content: encrypt(generatedText),
+    input_data: encryptJSON(sanitizedFields),
     api_tokens_used: tokensUsed,
     flagged: false,
   });

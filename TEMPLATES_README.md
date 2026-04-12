@@ -1,8 +1,8 @@
-# SuratResmi.id Templates — Implementation Guide
+# SuratResmi.Online Templates — Implementation Guide
 
 ## Overview
 
-This directory contains all legal documents, compliance audits, and template seeds for the SuratResmi.id platform (Phase 1, Track B).
+This directory contains all legal documents, compliance audits, and template seeds for the SuratResmi.Online platform (Phase 1, Track B).
 
 **Status:** All files complete; ready for:
 1. Indonesian lawyer review (ToS + Privacy Policy)

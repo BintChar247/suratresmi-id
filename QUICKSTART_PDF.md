@@ -129,7 +129,7 @@ See `tests/README.md` for detailed setup.
 | **Format** | A4 (210×297mm) portrait |
 | **Font** | Times New Roman |
 | **Multi-page** | Auto page breaks |
-| **Watermark** | "DRAF - SuratResmi.id" (free tier only) |
+| **Watermark** | "DRAF - SuratResmi.Online" (free tier only) |
 | **Materai** | Rp 10.000 placement notice (where required) |
 | **File Size** | 1KB–500KB |
 | **Response** | `Content-Type: application/pdf` with attachment header |

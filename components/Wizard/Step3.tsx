@@ -8,6 +8,7 @@ import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
 import { SkeletonInput } from '@/components/ui/Skeleton';
 import { AuthWall } from '@/components/AuthWall';
+import { SecurityBadge, PrivacyAssurance } from '@/components/ui/SecurityBadge';
 import { ChevronLeft } from 'lucide-react';
 
 interface FieldDef {
@@ -182,10 +183,20 @@ export function WizardStep3({ subtype, onNext, onPrev }: Step3Props): JSX.Elemen
         </div>
       )}
 
+      {/* Privacy assurance — shown above submit when fields are visible */}
       {!loadingFields && fields.length > 0 && (
-        <Button type="submit" fullWidth size="lg" loading={loading}>
-          Buat Surat
-        </Button>
+        <PrivacyAssurance />
+      )}
+
+      {!loadingFields && fields.length > 0 && (
+        <div className="space-y-2">
+          <Button type="submit" fullWidth size="lg" loading={loading}>
+            Buat Surat
+          </Button>
+          <div className="flex justify-center">
+            <SecurityBadge variant="encrypted" />
+          </div>
+        </div>
       )}
     </form>
     </AuthWall>

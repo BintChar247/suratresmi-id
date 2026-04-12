@@ -43,7 +43,7 @@ export function buildWeeklyReport(m: WeeklyMetrics): string {
   const avgMin = Math.floor(m.avgSessionDurationSec / 60);
   const avgSec = m.avgSessionDurationSec % 60;
 
-  return `📊 SuratResmi.id Weekly Report
+  return `📊 SuratResmi.Online Weekly Report
 Week of ${m.weekOf}
 
 📢 METRICS

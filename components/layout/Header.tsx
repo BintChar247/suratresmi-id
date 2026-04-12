@@ -6,7 +6,7 @@ export function Header(): JSX.Element {
     <header className="bg-white border-b border-gray-100 px-4 py-3">
       <div className="max-w-lg mx-auto flex items-center justify-between">
         <Link href="/" className="font-heading font-bold text-primary-600 text-lg">
-          SuratResmi.id
+          SuratResmi.Online
         </Link>
         <nav className="flex items-center gap-4">
           <Link href="/terms" className="text-sm text-gray-500 hover:text-gray-700">

@@ -1,4 +1,4 @@
-# Terms of Service — SuratResmi.id
+# Terms of Service — SuratResmi.Online
 
 **Effective Date:** April 11, 2026  
 **Last Updated:** April 11, 2026  
@@ -8,7 +8,7 @@
 
 ## 1. Acceptance of Terms
 
-By accessing or using SuratResmi.id (the "Platform"), you agree to be bound by these Terms of Service ("Terms"). If you do not agree to any part of these Terms, you must not use the Platform.
+By accessing or using SuratResmi.Online (the "Platform"), you agree to be bound by these Terms of Service ("Terms"). If you do not agree to any part of these Terms, you must not use the Platform.
 
 These Terms apply to all users, including but not limited to free users, credit-based users, and enterprise customers. We may update these Terms at any time. Updates will be posted on this page with a new "Last Updated" date. Your continued use of the Platform 30 days after such posting constitutes your acceptance of the updated Terms.
 
@@ -16,7 +16,7 @@ These Terms apply to all users, including but not limited to free users, credit-
 
 ## 2. Description of Service
 
-SuratResmi.id is an AI-powered platform that assists users in generating draft letters and legal documents in Bahasa Indonesia. The Platform provides:
+SuratResmi.Online is an AI-powered platform that assists users in generating draft letters and legal documents in Bahasa Indonesia. The Platform provides:
 
 - AI-generated letter templates (Surat Kuasa, Perjanjian Kerja, Surat Jual Beli, etc.)
 - Customizable field inputs to personalize letters
@@ -51,7 +51,7 @@ Subject to your compliance with these Terms, we grant you a limited, non-exclusi
 5. **Data Loss:** Loss of generated documents due to server failure, user error, or account deletion
 6. **Third-Party Actions:** Damages caused by misuse of documents by other parties
 
-**Maximum Liability:** In no event shall SuratResmi.id's total liability exceed the amount paid by the user in the 12 months preceding the claim (or Rp 100.000 if no payment made).
+**Maximum Liability:** In no event shall SuratResmi.Online's total liability exceed the amount paid by the user in the 12 months preceding the claim (or Rp 100.000 if no payment made).
 
 ---
 
@@ -116,7 +116,7 @@ You are solely responsible for:
 
 ## 8. Indemnification
 
-You agree to indemnify, defend, and hold harmless SuratResmi.id and its owners, operators, employees, and agents from any and all claims, damages, losses, liabilities, and expenses (including legal fees) arising from:
+You agree to indemnify, defend, and hold harmless SuratResmi.Online and its owners, operators, employees, and agents from any and all claims, damages, losses, liabilities, and expenses (including legal fees) arising from:
 
 1. Your breach of these Terms
 2. Your use of the Platform in violation of law
@@ -129,7 +129,7 @@ You agree to indemnify, defend, and hold harmless SuratResmi.id and its owners, 
 ## 9. Intellectual Property
 
 ### 9.1 Our IP
-All content on the Platform, including templates, UI design, AI models, and branding, is owned by SuratResmi.id or licensed to us. You may not reproduce, modify, or distribute this content without permission.
+All content on the Platform, including templates, UI design, AI models, and branding, is owned by SuratResmi.Online or licensed to us. You may not reproduce, modify, or distribute this content without permission.
 
 ### 9.2 Your Generated Documents
 You own the text content of documents you generate, but not the underlying template structure. You grant us a license to:
@@ -190,7 +190,7 @@ These Terms shall be governed by the laws of the Republic of Indonesia, specific
 **Arbitration:** For disputes over Rp 500,000,000, parties may elect binding arbitration under SIAC (Singapore International Arbitration Centre) or BANI (Indonesian Chamber of Commerce Arbitration Centre) rules, to be held in Jakarta, Indonesia.
 
 ### 12.3 No Class Actions
-You agree not to pursue class action, collective, or representative actions against SuratResmi.id. All disputes must be resolved individually.
+You agree not to pursue class action, collective, or representative actions against SuratResmi.Online. All disputes must be resolved individually.
 
 ---
 
@@ -255,7 +255,7 @@ We may update these Terms at any time. Changes become effective 30 days after po
 
 For questions about these Terms or the Platform, contact:
 
-**SuratResmi.id Legal Team**
+**SuratResmi.Online Legal Team**
 - Email: legal@suratresmi.id
 - Support: support@suratresmi.id
 - Address: [To be filled in with company registration address]
@@ -270,10 +270,10 @@ If any provision of these Terms is found to be unenforceable or invalid under In
 
 ## 19. Entire Agreement
 
-These Terms, together with our Privacy Policy and Acceptable Use Policy, constitute the entire agreement between you and SuratResmi.id regarding your use of the Platform. Any prior understandings or agreements are superseded by these Terms.
+These Terms, together with our Privacy Policy and Acceptable Use Policy, constitute the entire agreement between you and SuratResmi.Online regarding your use of the Platform. Any prior understandings or agreements are superseded by these Terms.
 
 ---
 
 **End of Terms of Service**
 
-**By using SuratResmi.id, you acknowledge that you have read, understood, and agree to be bound by these Terms of Service.**
+**By using SuratResmi.Online, you acknowledge that you have read, understood, and agree to be bound by these Terms of Service.**

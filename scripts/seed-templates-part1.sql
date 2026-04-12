@@ -1,4 +1,4 @@
--- SuratResmi.id — Template Seeding Script (Part 1 of 2)
+-- SuratResmi.Online — Template Seeding Script (Part 1 of 2)
 -- Run this in Supabase SQL Editor
 -- Templates: Surat Kuasa (all subtypes) + Surat Jual Beli
 

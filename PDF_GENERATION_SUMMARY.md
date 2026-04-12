@@ -9,7 +9,7 @@ Generates A4 PDFs in Times New Roman with the following features:
 - **Format**: A4 (210×297mm), portrait orientation
 - **Font**: Times New Roman (via jsPDF)
 - **Multi-page support**: Automatic page breaks
-- **Free tier watermark**: "DRAF - SuratResmi.id" (diagonal, light gray)
+- **Free tier watermark**: "DRAF - SuratResmi.Online" (diagonal, light gray)
 - **Materai placement**: Optional `[Tempat Materai Rp 10.000]` notice
 - **File size**: 1KB–500KB (optimized)
 - **Response**: Binary PDF with `attachment` header for download

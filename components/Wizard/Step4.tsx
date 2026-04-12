@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/Button';
+import { SecurityBadge } from '@/components/ui/SecurityBadge';
 import { useAuth } from '@/lib/auth-context';
 import { ChevronLeft, Download, RefreshCw, CheckCircle, AlertTriangle } from 'lucide-react';
 
@@ -108,6 +109,11 @@ export function WizardStep4({ letter, onPrev, onRestart }: Step4Props): JSX.Elem
         <RefreshCw size={16} className="mr-2" />
         Buat Surat Lain
       </Button>
+
+      {/* Security assurance */}
+      <div className="flex justify-center pt-2">
+        <SecurityBadge variant="encrypted" />
+      </div>
     </div>
   );
 }

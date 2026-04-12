@@ -1,4 +1,4 @@
-# Legal Compliance Audit: SuratResmi.id Templates
+# Legal Compliance Audit: SuratResmi.Online Templates
 
 **Jurisdiction:** Republic of Indonesia  
 **Legal Frameworks:** KUH Perdata, KUH Dagang, UU No. 8/1997 (Documents), UU No. 13/2003 (Employment), UU No. 27/2022 (Data Privacy)  
@@ -124,7 +124,7 @@ secara hukum, Anda HARUS:
 2. Memverifikasi sertifikat tanah (SHM/SHGB)
 3. Melakukan pembayaran melalui bank/escrow
 
-SuratResmi.id TIDAK bertanggung jawab atas transaksi tanah. Konsultasikan dengan notaris.
+SuratResmi.Online TIDAK bertanggung jawab atas transaksi tanah. Konsultasikan dengan notaris.
 ```
 
 ---
@@ -260,7 +260,7 @@ Dokumen ini adalah DRAF perjanjian jual beli tanah. Untuk transaksi yang sah sec
 3. BALIK NAMA: Proses balik nama di BPN harus dilakukan SETELAH akta notaris
 4. PAJAK: Pastikan BPHTB dan PPh sudah dihitung
 
-SuratResmi.id TIDAK bertanggung jawab atas keabsahan transaksi tanah.
+SuratResmi.Online TIDAK bertanggung jawab atas keabsahan transaksi tanah.
 ```
 
 ---
@@ -450,7 +450,7 @@ Perjanjian kerja ini harus sesuai dengan Undang-Undang Ketenagakerjaan. Pastikan
 4. PROBASI: Masa probasi maksimal 3 bulan
 5. PESANGON: Jika diberhentikan, karyawan berhak pesangon sesuai masa kerja
 
-SuratResmi.id tidak bertanggung jawab atas kepatuhan hukum ketenagakerjaan.
+SuratResmi.Online tidak bertanggung jawab atas kepatuhan hukum ketenagakerjaan.
 Konsultasikan dengan HR atau notaris untuk perjanjian kerja besar.
 ```
 

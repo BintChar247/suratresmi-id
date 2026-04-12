@@ -181,7 +181,7 @@ audit_log (
 - [x] A4 format (210×297mm)
 - [x] Times New Roman font
 - [x] Multi-page support with auto page breaks
-- [x] Free tier watermark ("DRAF - SuratResmi.id")
+- [x] Free tier watermark ("DRAF - SuratResmi.Online")
 - [x] Materai placement notices (Rp 10.000)
 - [x] Comprehensive QA test suite (30+ tests)
 - [x] Output validation (content, format, security)

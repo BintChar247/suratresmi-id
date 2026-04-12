@@ -3,7 +3,7 @@ import { AuthProvider } from '@/lib/auth-context';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'SuratResmi.id — Pembuat Surat Resmi Online',
+  title: 'SuratResmi.Online — Pembuat Surat Resmi Online',
   description: 'Buat surat kuasa, perjanjian, dan dokumen resmi dalam 30 detik.',
   icons: { icon: '/favicon.ico' },
 };

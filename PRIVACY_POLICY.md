@@ -1,4 +1,4 @@
-# Privacy Policy — SuratResmi.id
+# Privacy Policy — SuratResmi.Online
 
 **Effective Date:** April 11, 2026  
 **Last Updated:** April 11, 2026  
@@ -8,7 +8,7 @@
 
 ## 1. Data Controller
 
-**SuratResmi.id** is the Data Controller responsible for the processing of your personal data.
+**SuratResmi.Online** is the Data Controller responsible for the processing of your personal data.
 
 **Legal Representative:**
 - Name: [To be filled]
@@ -304,7 +304,7 @@ We may update this Privacy Policy to reflect:
 **Indonesian Data Protection Authority:**
 - Komisi Perlindungan Data Pribadi (KPDP)
 - Website: [KPDP official website]
-- Lodge complaints if SuratResmi.id does not respond to data rights requests
+- Lodge complaints if SuratResmi.Online does not respond to data rights requests
 
 ---
 
@@ -321,7 +321,7 @@ We have conducted a DPIA for:
 
 ## 16. Compliance Declaration
 
-SuratResmi.id complies with:
+SuratResmi.Online complies with:
 - ✅ UU No. 27/2022 (Personal Data Protection Law)
 - ✅ UU No. 8/1997 (Document Law)
 - ✅ UU No. 13/2003 (Employment Law)
@@ -332,7 +332,7 @@ SuratResmi.id complies with:
 **End of Privacy Policy**
 
 **Last updated:** April 11, 2026  
-**By using SuratResmi.id, you acknowledge that you have read and understood this Privacy Policy.**
+**By using SuratResmi.Online, you acknowledge that you have read and understood this Privacy Policy.**
 
 If you do not agree with any part of this Privacy Policy, please do not use the Platform.
 

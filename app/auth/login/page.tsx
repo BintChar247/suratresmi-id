@@ -58,7 +58,7 @@ function LoginForm(): JSX.Element {
     <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
       <div className="max-w-md w-full p-8 bg-white rounded-2xl shadow-sm border border-gray-100">
         <div className="text-center mb-8">
-          <h1 className="text-2xl font-bold text-gray-900 font-heading">Masuk ke SuratResmi.id</h1>
+          <h1 className="text-2xl font-bold text-gray-900 font-heading">Masuk ke SuratResmi.Online</h1>
           <p className="text-sm text-gray-500 mt-2">Buat surat resmi dalam 30 detik</p>
         </div>
 

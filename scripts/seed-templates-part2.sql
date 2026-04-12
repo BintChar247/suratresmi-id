@@ -1,4 +1,4 @@
--- SuratResmi.id — Template Seeding Script (Part 2 of 2)
+-- SuratResmi.Online — Template Seeding Script (Part 2 of 2)
 -- Run this in Supabase SQL Editor AFTER Part 1
 -- Templates: Perjanjian Kerja + Perjanjian Sewa + Perjanjian Utang + Surat Pernyataan
 

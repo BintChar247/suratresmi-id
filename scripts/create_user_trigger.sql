@@ -1,4 +1,4 @@
--- SuratResmi.id — Auto-create public.users on Supabase signup
+-- SuratResmi.Online — Auto-create public.users on Supabase signup
 -- Run this in Supabase SQL Editor ONCE
 -- This fixes the "Data pengguna tidak ditemukan" 404 error on generation
 

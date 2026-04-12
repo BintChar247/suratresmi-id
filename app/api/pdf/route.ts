@@ -395,7 +395,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     addFooters(doc);
 
     if (body.isFreeUser) {
-      addWatermark(doc, 'DRAF - SuratResmi.id');
+      addWatermark(doc, 'DRAF - SuratResmi.Online');
     }
 
     if (body.requiresMaterai) {

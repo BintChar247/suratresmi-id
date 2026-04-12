@@ -1,4 +1,4 @@
--- SuratResmi.id — Template Seeding Script (Part 3 of 3)
+-- SuratResmi.Online — Template Seeding Script (Part 3 of 3)
 -- Run this in Supabase SQL Editor AFTER Parts 1 & 2
 -- Templates: Perjanjian Utang (5 subtypes) + Surat Pernyataan (6 subtypes)
 

@@ -1,4 +1,4 @@
--- SuratResmi.id — Template Seeding Script (Part 1 of 2)
+-- SuratResmi.Online — Template Seeding Script (Part 1 of 2)
 -- Run this in Supabase SQL Editor
 -- Templates: Surat Kuasa (all subtypes) + Surat Jual Beli
 
@@ -711,7 +711,7 @@ PROSES SETELAH SIGNING:
 Output: Perjanjian jual beli rumah yang detail, legal, dan siap notarisasi.',
   true
 );
--- SuratResmi.id — Template Seeding Script (Part 2 of 2)
+-- SuratResmi.Online — Template Seeding Script (Part 2 of 2)
 -- Run this in Supabase SQL Editor AFTER Part 1
 -- Templates: Perjanjian Kerja + Perjanjian Sewa + Perjanjian Utang + Surat Pernyataan
 
@@ -1376,7 +1376,7 @@ Output: Perjanjian sewa toko komersial yang fair dan legal.',
 -- Continue in next batch...
 -- Part 2 will have more sections: Perjanjian Utang + Surat Pernyataan
 -- SQL file size getting large; consider running Part 2 separately
--- SuratResmi.id — Template Seeding Script (Part 3 of 3)
+-- SuratResmi.Online — Template Seeding Script (Part 3 of 3)
 -- Run this in Supabase SQL Editor AFTER Parts 1 & 2
 -- Templates: Perjanjian Utang (5 subtypes) + Surat Pernyataan (6 subtypes)
 

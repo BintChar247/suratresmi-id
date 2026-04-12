@@ -1,4 +1,4 @@
--- SuratResmi.id — Production Readiness Diagnosis
+-- SuratResmi.Online — Production Readiness Diagnosis
 -- Run each block in Supabase SQL Editor to check what's broken
 
 -- ─── 1. Are there templates? ─────────────────────────────────────────────────

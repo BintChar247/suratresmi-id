@@ -1,4 +1,4 @@
--- SuratResmi.id — Complete Database Schema
+-- SuratResmi.Online — Complete Database Schema
 -- Run this in Supabase SQL Editor (Settings > Singapore region recommended)
 -- All tables have RLS enabled (default deny, whitelisted with policies)
 

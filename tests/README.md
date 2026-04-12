@@ -1,4 +1,4 @@
-# SuratResmi.id — QA Test Suite
+# SuratResmi.Online — QA Test Suite
 
 Comprehensive test suite for PDF generation and letter quality assurance. Tests validate letter content, PDF format, and Indonesian language compliance across 30+ document subtypes.
 
