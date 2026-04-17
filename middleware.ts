@@ -40,11 +40,38 @@ export async function middleware(request: NextRequest): Promise<NextResponse> {
   const { data: { session } } = await supabase.auth.getSession();
   const isAuthenticated = !!session;
 
-  // Redirect unauthenticated users from /app to login
-  if (pathname.startsWith('/app') && !isAuthenticated) {
+  // Redirect unauthenticated users from protected routes to login
+  const protectedPrefixes = ['/app', '/admin', '/b2b'];
+  if (protectedPrefixes.some((p) => pathname.startsWith(p)) && !isAuthenticated) {
     const loginUrl = new URL('/auth/login', request.url);
     loginUrl.searchParams.set('redirect', pathname);
     return NextResponse.redirect(loginUrl);
+  }
+
+  // Admin-only route protection
+  if (pathname.startsWith('/admin') && isAuthenticated) {
+    const { data: userData } = await supabase
+      .from('users')
+      .select('plan')
+      .eq('id', session!.user.id)
+      .single();
+
+    if (userData?.plan !== 'admin') {
+      return NextResponse.redirect(new URL('/app', request.url));
+    }
+  }
+
+  // B2B route protection — only b2b_basic, b2b_team, or admin users
+  if (pathname.startsWith('/b2b') && isAuthenticated) {
+    const { data: userData } = await supabase
+      .from('users')
+      .select('plan')
+      .eq('id', session!.user.id)
+      .single();
+
+    if (!userData || !['b2b_basic', 'b2b_team', 'admin'].includes(userData.plan)) {
+      return NextResponse.redirect(new URL('/app', request.url));
+    }
   }
 
   // Rate limiting — extract rightmost IP from x-forwarded-for to prevent spoofing
