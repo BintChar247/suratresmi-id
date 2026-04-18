@@ -88,12 +88,147 @@ export default function AdminDashboard(): JSX.Element {
         <KpiCard label="Errors" value={stats.errors} />
       </div>
 
+      <MarketingMetrics supabase={supabase} />
       <UserManagement supabase={supabase} />
       <FlaggedLetters supabase={supabase} />
       <PaymentDisputes supabase={supabase} />
       <ErrorLog />
       <CreditGrants supabase={supabase} />
     </div>
+  );
+}
+
+interface MarketingStats {
+  signups7d: number;
+  signups30d: number;
+  paidConversions30d: number;
+  referralsTotal: number;
+  referralsConverted: number;
+  topReferrers: Array<{ referrer_id: string; count: number }>;
+}
+
+function MarketingMetrics({
+  supabase,
+}: {
+  supabase: ReturnType<typeof createBrowserClient>;
+}): JSX.Element {
+  const [stats, setStats] = useState<MarketingStats | null>(null);
+
+  useEffect(() => {
+    const load = async (): Promise<void> => {
+      const now = Date.now();
+      const sevenDaysAgo = new Date(now - 7 * 24 * 60 * 60 * 1000).toISOString();
+      const thirtyDaysAgo = new Date(now - 30 * 24 * 60 * 60 * 1000).toISOString();
+
+      const [signups7Result, signups30Result, paidResult, referralsResult] = await Promise.all([
+        supabase
+          .from('users')
+          .select('*', { count: 'exact', head: true })
+          .gte('created_at', sevenDaysAgo),
+        supabase
+          .from('users')
+          .select('*', { count: 'exact', head: true })
+          .gte('created_at', thirtyDaysAgo),
+        supabase
+          .from('transactions')
+          .select('user_id')
+          .eq('status', 'success')
+          .eq('type', 'purchase')
+          .gte('created_at', thirtyDaysAgo),
+        supabase
+          .from('referrals')
+          .select('referrer_id, converted_at')
+          .order('created_at', { ascending: false })
+          .limit(500),
+      ]);
+
+      const referralRows = (referralsResult.data ?? []) as Array<{
+        referrer_id: string;
+        converted_at: string | null;
+      }>;
+
+      const referrerCounts = new Map<string, number>();
+      for (const r of referralRows) {
+        referrerCounts.set(r.referrer_id, (referrerCounts.get(r.referrer_id) ?? 0) + 1);
+      }
+      const topReferrers = [...referrerCounts.entries()]
+        .map(([referrer_id, count]) => ({ referrer_id, count }))
+        .sort((a, b) => b.count - a.count)
+        .slice(0, 5);
+
+      const paidRows = (paidResult.data ?? []) as Array<{ user_id: string }>;
+      const uniquePayers = new Set(paidRows.map((t) => t.user_id));
+
+      setStats({
+        signups7d: signups7Result.count ?? 0,
+        signups30d: signups30Result.count ?? 0,
+        paidConversions30d: uniquePayers.size,
+        referralsTotal: referralRows.length,
+        referralsConverted: referralRows.filter((r) => r.converted_at != null).length,
+        topReferrers,
+      });
+    };
+
+    void load();
+  }, [supabase]);
+
+  if (!stats) {
+    return (
+      <section className="bg-white p-6 rounded-lg shadow">
+        <h2 className="text-xl font-bold mb-4">Marketing</h2>
+        <p className="text-gray-500">Memuat statistik...</p>
+      </section>
+    );
+  }
+
+  const conversionRate =
+    stats.signups30d > 0
+      ? ((stats.paidConversions30d / stats.signups30d) * 100).toFixed(1)
+      : '0.0';
+  const referralConversionRate =
+    stats.referralsTotal > 0
+      ? ((stats.referralsConverted / stats.referralsTotal) * 100).toFixed(1)
+      : '0.0';
+
+  return (
+    <section className="bg-white p-6 rounded-lg shadow space-y-6">
+      <h2 className="text-xl font-bold">Marketing &amp; Growth</h2>
+
+      <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+        <KpiCard label="Signups (7d)" value={stats.signups7d} />
+        <KpiCard label="Signups (30d)" value={stats.signups30d} />
+        <KpiCard label="Paid Conv. (30d)" value={`${stats.paidConversions30d} (${conversionRate}%)`} />
+        <KpiCard label="Referrals" value={stats.referralsTotal} />
+        <KpiCard
+          label="Ref. Conv."
+          value={`${stats.referralsConverted} (${referralConversionRate}%)`}
+        />
+      </div>
+
+      <div>
+        <h3 className="font-semibold mb-2">Top Referrers</h3>
+        {stats.topReferrers.length === 0 ? (
+          <p className="text-sm text-gray-500">Belum ada referral yang tercatat.</p>
+        ) : (
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="text-left border-b">
+                <th className="pb-2">Referrer</th>
+                <th className="pb-2">Invited</th>
+              </tr>
+            </thead>
+            <tbody>
+              {stats.topReferrers.map((r) => (
+                <tr key={r.referrer_id} className="border-b">
+                  <td className="py-2 font-mono text-xs">{r.referrer_id.slice(0, 8)}</td>
+                  <td className="py-2">{r.count}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </div>
+    </section>
   );
 }
 

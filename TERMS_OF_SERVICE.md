@@ -42,7 +42,7 @@ Subject to your compliance with these Terms, we grant you a limited, non-exclusi
 
 ## 4. Limitation of Liability
 
-**TO THE FULLEST EXTENT PERMITTED BY INDONESIAN LAW, SURATRESMI.ID AND ITS OWNERS, OPERATORS, AND CONTRIBUTORS ARE NOT LIABLE FOR:**
+**TO THE FULLEST EXTENT PERMITTED BY INDONESIAN LAW, SuratResmi.Online AND ITS OWNERS, OPERATORS, AND CONTRIBUTORS ARE NOT LIABLE FOR:**
 
 1. **Legal Consequences:** Any legal consequences, damages, or disputes arising from the use of generated documents
 2. **Errors in Content:** Mistakes, omissions, or inaccuracies in generated letters (AI may contain errors)
@@ -159,7 +159,7 @@ Your use of the Platform is governed by our Privacy Policy, which incorporates U
 ## 11. Termination
 
 ### 11.1 By You
-You may terminate your account at any time by contacting support@suratresmi.id. Upon termination:
+You may terminate your account at any time by contacting support@SuratResmi.Online. Upon termination:
 - Your documents are deleted after 90-day retention period
 - Unused credits are forfeited
 - Access to the Platform is immediately revoked
@@ -179,7 +179,7 @@ We may suspend or terminate your account if you:
 ## 12. Dispute Resolution
 
 ### 12.1 Informal Resolution
-Before pursuing formal action, disputes should be resolved through good-faith discussion. Contact us at support@suratresmi.id with details of your concern.
+Before pursuing formal action, disputes should be resolved through good-faith discussion. Contact us at support@SuratResmi.Online with details of your concern.
 
 ### 12.2 Formal Resolution — Indonesian Law
 These Terms shall be governed by the laws of the Republic of Indonesia, specifically:
@@ -256,8 +256,8 @@ We may update these Terms at any time. Changes become effective 30 days after po
 For questions about these Terms or the Platform, contact:
 
 **SuratResmi.Online Legal Team**
-- Email: legal@suratresmi.id
-- Support: support@suratresmi.id
+- Email: legal@SuratResmi.Online
+- Support: support@SuratResmi.Online
 - Address: [To be filled in with company registration address]
 
 ---

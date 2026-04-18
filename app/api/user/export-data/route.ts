@@ -77,7 +77,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
   } catch (err) {
     console.error('Data export error:', err);
     return NextResponse.json(
-      { error: 'Gagal mengekspor data. Hubungi dpo@suratresmi.id.' },
+      { error: 'Gagal mengekspor data. Hubungi dpo@suratresmi.online.' },
       { status: 500 }
     );
   }

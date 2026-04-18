@@ -128,10 +128,10 @@ export default function TermsPage(): JSX.Element {
         <h2 className="text-xl font-semibold">9. Kontak</h2>
         <p>
           Pertanyaan terkait Syarat &amp; Ketentuan:{' '}
-          <span className="font-mono text-sm">legal@suratresmi.id</span>
+          <span className="font-mono text-sm">legal@suratresmi.online</span>
           <br />
           Dukungan pelanggan:{' '}
-          <span className="font-mono text-sm">support@suratresmi.id</span>
+          <span className="font-mono text-sm">support@suratresmi.online</span>
         </p>
       </section>
     </main>

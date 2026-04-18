@@ -67,7 +67,7 @@ export async function DELETE(request: NextRequest): Promise<NextResponse> {
   } catch (err) {
     console.error('Data deletion error:', err);
     return NextResponse.json(
-      { error: 'Gagal menghapus data. Hubungi dpo@suratresmi.id.' },
+      { error: 'Gagal menghapus data. Hubungi dpo@suratresmi.online.' },
       { status: 500 }
     );
   }

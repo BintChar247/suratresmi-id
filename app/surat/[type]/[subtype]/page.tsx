@@ -8,7 +8,7 @@ import { getSupabaseAdmin } from '@/lib/supabaseAdmin';
 export const revalidate = 86400;
 export const dynamicParams = true;
 
-const SITE_URL = 'https://suratresmi.id';
+const SITE_URL = 'https://suratresmi.online';
 
 const TYPE_LABELS: Record<string, string> = {
   kuasa: 'Surat Kuasa',
@@ -94,7 +94,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { template, seo } = await fetchPageData(params.subtype);
   if (!template || !seo) {
-    return { title: 'Surat tidak ditemukan | SuratResmi.id' };
+    return { title: 'Surat tidak ditemukan | SuratResmi.Online' };
   }
 
   const canonical = `${SITE_URL}/surat/${params.type}/${params.subtype}`;
@@ -107,17 +107,13 @@ export async function generateMetadata({
       url: canonical,
       title: seo.meta_title,
       description: seo.meta_description,
-      siteName: 'SuratResmi.id',
+      siteName: 'SuratResmi.Online',
       locale: 'id_ID',
-      images: [
-        { url: `${SITE_URL}/og-image.png`, width: 1200, height: 630 },
-      ],
     },
     twitter: {
       card: 'summary_large_image',
       title: seo.meta_title,
       description: seo.meta_description,
-      images: [`${SITE_URL}/og-image.png`],
     },
     robots: { index: true, follow: true },
   };
@@ -165,7 +161,7 @@ export default async function SuratPage({
     '@type': 'HowTo',
     name: `Cara Membuat ${template.name_id}`,
     step: [
-      { '@type': 'HowToStep', position: 1, name: 'Pilih Jenis Surat', text: `Pilih template "${template.name_id}" di SuratResmi.id.` },
+      { '@type': 'HowToStep', position: 1, name: 'Pilih Jenis Surat', text: `Pilih template "${template.name_id}" di SuratResmi.Online.` },
       { '@type': 'HowToStep', position: 2, name: 'Isi Data', text: 'Lengkapi form dengan data pihak-pihak terkait.' },
       { '@type': 'HowToStep', position: 3, name: 'Unduh PDF', text: 'Unduh surat resmi dalam format PDF siap cetak.' },
     ],

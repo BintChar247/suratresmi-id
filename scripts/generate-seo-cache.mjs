@@ -65,15 +65,15 @@ const supabase = createClient(NEXT_PUBLIC_SUPABASE_URL, SUPABASE_SERVICE_ROLE_KE
 
 // ─── Prompt ──────────────────────────────────────────────────────────────────
 
-const SYSTEM_PROMPT = `Anda adalah penulis konten SEO dan ahli surat resmi Indonesia untuk SuratResmi.id — platform yang membantu masyarakat Indonesia membuat surat resmi dengan cepat.
+const SYSTEM_PROMPT = `Anda adalah penulis konten SEO dan ahli surat resmi Indonesia untuk SuratResmi.Online — platform yang membantu masyarakat Indonesia membuat surat resmi dengan cepat.
 
-Tugas Anda: untuk setiap template surat yang diberikan, menghasilkan konten landing page SEO dalam Bahasa Indonesia berkualitas tinggi. Output akan muncul di halaman publik https://suratresmi.id/surat/<type>/<subtype_id> dan dipindai oleh Google.
+Tugas Anda: untuk setiap template surat yang diberikan, menghasilkan konten landing page SEO dalam Bahasa Indonesia berkualitas tinggi. Output akan muncul di halaman publik https://suratresmi.online/surat/<type>/<subtype_id> dan dipindai oleh Google.
 
 ## Output yang harus Anda hasilkan (sebagai objek JSON tunggal)
 
 \`\`\`json
 {
-  "meta_title": "string (50-65 karakter, termasuk kata kunci utama + brand 'SuratResmi.id')",
+  "meta_title": "string (50-65 karakter, termasuk kata kunci utama + brand 'SuratResmi.Online')",
   "meta_description": "string (140-160 karakter, mengandung CTA dan kata kunci utama, mendorong klik dari SERP)",
   "example_letter": "string (contoh surat LENGKAP, realistis, 400-700 kata, format surat resmi Indonesia)",
   "faq_json": [
@@ -97,12 +97,12 @@ Tugas Anda: untuk setiap template surat yang diberikan, menghasilkan konten land
 
 4. **Larangan keras**:
    - JANGAN memberi nasihat hukum spesifik untuk kasus individu. Sebut "disarankan konsultasi dengan profesional hukum" jika relevan.
-   - JANGAN menyertakan URL kecuali suratresmi.id.
+   - JANGAN menyertakan URL kecuali suratresmi.online.
    - JANGAN menyertakan kode, tag HTML, atau placeholder seperti {{nama}}.
    - JANGAN menyebut merek platform lain.
 
 5. **SEO**:
-   - meta_title mencakup nama surat persis + tahun tidak perlu + "SuratResmi.id". Contoh: "Contoh Surat Kuasa Pengurusan STNK (Gratis) | SuratResmi.id"
+   - meta_title mencakup nama surat persis + tahun tidak perlu + "SuratResmi.Online". Contoh: "Contoh Surat Kuasa Pengurusan STNK (Gratis) | SuratResmi.Online"
    - meta_description harus berisi kata kerja CTA: "Buat", "Unduh", "Gratis", "30 detik". Tepat 140-160 karakter.
 
 ## Contoh output lengkap (referensi kualitas)
@@ -116,7 +116,7 @@ Output yang diharapkan (singkatan untuk ruang; contoh sebenarnya LENGKAP):
 
 \`\`\`json
 {
-  "meta_title": "Contoh Surat Kuasa Pengurusan STNK (Gratis) | SuratResmi.id",
+  "meta_title": "Contoh Surat Kuasa Pengurusan STNK (Gratis) | SuratResmi.Online",
   "meta_description": "Buat Surat Kuasa Pengurusan STNK resmi dalam 30 detik. Contoh lengkap, format benar, langsung jadi PDF. Gratis 3 surat pertama.",
   "example_letter": "SURAT KUASA PENGURUSAN STNK\\n\\nYang bertanda tangan di bawah ini:\\n\\nNama\\t\\t: Budi Santoso\\nNIK\\t\\t: 3171012345678901\\nAlamat\\t: Jl. Merdeka No. 123, RT 001/RW 002, Kelurahan Cempaka Putih, Kecamatan Menteng, Jakarta Pusat\\n\\nSelanjutnya disebut sebagai PEMBERI KUASA.\\n\\nDengan ini memberikan kuasa penuh kepada:\\n\\nNama\\t\\t: Ahmad Fauzi\\nNIK\\t\\t: 3171098765432109\\nAlamat\\t: Jl. Sudirman No. 45, Jakarta Pusat\\n\\nSelanjutnya disebut sebagai PENERIMA KUASA.\\n\\n... [isi surat lengkap 400-700 kata dengan detail kendaraan, maksud pengurusan, penutup, tanda tangan kedua belah pihak] ...",
   "faq_json": [

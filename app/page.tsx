@@ -1,9 +1,58 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { HeroIllustration } from '@/components/landing/HeroIllustration';
 import { SolvedIllustration } from '@/components/landing/SolvedIllustration';
 import { FileText, Clock, Download, Shield, Lock, Eye, Trash2, Building2, Landmark, Briefcase, GraduationCap, HeartHandshake, Scale } from 'lucide-react';
+
+const SITE_URL = 'https://suratresmi.online';
+
+export const metadata: Metadata = {
+  title: 'Pembuat Surat Resmi Online — Kuasa, Perjanjian, Jual Beli dalam 30 Detik',
+  description:
+    'Buat surat kuasa, perjanjian kerja, jual beli, dan 50+ dokumen resmi Indonesia dalam 30 detik. Gratis 3 surat pertama, siap PDF, sesuai UU PDP.',
+  alternates: { canonical: `${SITE_URL}/` },
+  openGraph: {
+    type: 'website',
+    url: `${SITE_URL}/`,
+    title: 'Pembuat Surat Resmi Online — SuratResmi.Online',
+    description:
+      'Buat surat kuasa, perjanjian, dan dokumen resmi Indonesia dalam 30 detik. Gratis 3 surat pertama.',
+    siteName: 'SuratResmi.Online',
+    locale: 'id_ID',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Pembuat Surat Resmi Online — SuratResmi.Online',
+    description: 'Buat surat resmi Indonesia dalam 30 detik. Gratis 3 surat pertama.',
+  },
+  robots: { index: true, follow: true },
+};
+
+const ORGANIZATION_SCHEMA = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'SuratResmi.Online',
+  url: SITE_URL,
+  logo: `${SITE_URL}/logo.svg`,
+  description:
+    'Platform pembuat surat resmi online untuk warga Indonesia. Surat kuasa, perjanjian, jual beli, dan dokumen resmi lainnya.',
+  sameAs: [],
+};
+
+const WEBSITE_SCHEMA = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'SuratResmi.Online',
+  url: SITE_URL,
+  inLanguage: 'id-ID',
+  potentialAction: {
+    '@type': 'SearchAction',
+    target: `${SITE_URL}/surat?q={search_term_string}`,
+    'query-input': 'required name=search_term_string',
+  },
+};
 
 const LETTER_TYPES = [
   { icon: FileText, name: 'Surat Kuasa', desc: 'Kuasa umum & khusus', color: 'bg-primary-50 text-primary-600' },
@@ -32,6 +81,14 @@ const STEPS = [
 export default function Home(): JSX.Element {
   return (
     <div className="min-h-screen flex flex-col">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(ORGANIZATION_SCHEMA) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(WEBSITE_SCHEMA) }}
+      />
       <Header />
 
       <main className="flex-1">

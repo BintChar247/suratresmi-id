@@ -12,11 +12,11 @@
 
 **Legal Representative:**
 - Name: [To be filled]
-- Email: legal@suratresmi.id
+- Email: legal@SuratResmi.Online
 - Address: [To be filled with company registration address]
 
 **Data Protection Officer (DPO):**
-- Email: dpo@suratresmi.id
+- Email: dpo@SuratResmi.Online
 - Available: Monday–Friday, 09:00–17:00 WIB
 
 You have the right to contact the DPO with any data protection concerns.
@@ -162,19 +162,19 @@ You have the following rights:
 
 ### 7.1 Right to Access
 You can request a copy of all personal data we hold about you.
-- **Process:** Email dpo@suratresmi.id with "Access Request" in subject
+- **Process:** Email dpo@SuratResmi.Online with "Access Request" in subject
 - **Timeline:** We will respond within 30 days
 - **Cost:** Free of charge
 
 ### 7.2 Right to Correction
 You can request correction of inaccurate or incomplete data.
-- **Process:** Email dpo@suratresmi.id or update info in account settings
+- **Process:** Email dpo@SuratResmi.Online or update info in account settings
 - **Timeline:** Correction made within 15 days
 - **Cost:** Free
 
 ### 7.3 Right to Deletion ("Right to be Forgotten")
 You can request deletion of your personal data.
-- **Process:** Email dpo@suratresmi.id with "Deletion Request"
+- **Process:** Email dpo@SuratResmi.Online with "Deletion Request"
 - **Exceptions:** 
   - Transaction records (7-year tax obligation)
   - Audit logs (1-year UU PDP requirement)
@@ -189,7 +189,7 @@ You can request your data in a portable format.
 
 ### 7.5 Right to Restrict Processing
 You can request that we stop processing your data (while retaining it).
-- **Process:** Email dpo@suratresmi.id
+- **Process:** Email dpo@SuratResmi.Online
 - **Effect:** Data retained but not processed (except legal obligations)
 - **Timeline:** Restriction applied within 15 days
 
@@ -252,7 +252,7 @@ We do NOT use advertising cookies or third-party trackers.
 
 The Platform is not intended for users under 18 years old. We do not knowingly collect personal data from children. If we discover a user is under 18, we will delete their account and data.
 
-**For parents/guardians:** If you believe your child has created an account, contact dpo@suratresmi.id.
+**For parents/guardians:** If you believe your child has created an account, contact dpo@SuratResmi.Online.
 
 ---
 
@@ -294,12 +294,12 @@ We may update this Privacy Policy to reflect:
 **For Data Access Requests, Complaints, or Questions:**
 
 **Data Protection Officer (DPO):**
-- Email: dpo@suratresmi.id
+- Email: dpo@SuratResmi.Online
 - Response time: Within 30 days
 
 **General Support:**
-- Email: support@suratresmi.id
-- Legal Team: legal@suratresmi.id
+- Email: support@SuratResmi.Online
+- Legal Team: legal@SuratResmi.Online
 
 **Indonesian Data Protection Authority:**
 - Komisi Perlindungan Data Pribadi (KPDP)
@@ -342,7 +342,7 @@ If you do not agree with any part of this Privacy Policy, please do not use the 
 
 | Right | How to Exercise | Response Time |
 |---|---|---|
-| **Access Data** | Email dpo@suratresmi.id | 30 days |
+| **Access Data** | Email dpo@SuratResmi.Online | 30 days |
 | **Correct Data** | Account settings or DPO email | 15 days |
 | **Delete Data** | DPO email "Deletion Request" | 30 days |
 | **Export Data** | DPO email "Data Portability Request" | 30 days |

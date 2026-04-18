@@ -31,7 +31,7 @@ This directory contains all legal documents, compliance audits, and template see
    - UU No. 27/2022 (Indonesian Data Privacy Law) compliant
    - Data retention: 90 days for letter content, 7 years for transactions
    - User rights: Access, correction, deletion, export, opt-out
-   - DPO contact: dpo@suratresmi.id
+   - DPO contact: dpo@SuratResmi.Online
    - **Action:** Publish at `/privacy`; contact DPO email must be monitored
 
 4. **GENERAL_DISCLAIMER.md** (2,000+ words)
@@ -148,7 +148,7 @@ This directory contains all legal documents, compliance audits, and template see
 - [ ] Have lawyer review TERMS_OF_SERVICE.md
 - [ ] Have lawyer review PRIVACY_POLICY.md
 - [ ] Get sign-off on GENERAL_DISCLAIMER.md
-- [ ] Finalize DPO contact email (dpo@suratresmi.id)
+- [ ] Finalize DPO contact email (dpo@SuratResmi.Online)
 
 ### Phase 2: Database Setup
 - [ ] Run seed-templates-part1.sql in Supabase
@@ -299,9 +299,9 @@ SELECT * FROM templates WHERE requires_materai = TRUE;
 ## Support
 
 For questions about templates or compliance, contact:
-- **Legal:** legal@suratresmi.id
-- **DPO:** dpo@suratresmi.id
-- **Support:** support@suratresmi.id
+- **Legal:** legal@SuratResmi.Online
+- **DPO:** dpo@SuratResmi.Online
+- **Support:** support@SuratResmi.Online
 
 ---
 

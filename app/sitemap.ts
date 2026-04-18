@@ -1,7 +1,7 @@
 import type { MetadataRoute } from 'next';
 import { getSupabaseAdmin } from '@/lib/supabaseAdmin';
 
-const SITE_URL = 'https://suratresmi.id';
+const SITE_URL = 'https://suratresmi.online';
 
 export const revalidate = 86400;
 

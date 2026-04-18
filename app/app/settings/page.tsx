@@ -1,10 +1,11 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/lib/auth-context';
 import { Button } from '@/components/ui/Button';
 import { SecurityBadge } from '@/components/ui/SecurityBadge';
+import { ReferralWidget } from '@/components/ReferralWidget';
 import { Shield, Download, Trash2, ChevronLeft, AlertTriangle } from 'lucide-react';
 import Link from 'next/link';
 
@@ -17,10 +18,13 @@ export default function SettingsPage(): JSX.Element {
   const [deleteInput, setDeleteInput] = useState('');
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
 
-  if (!user) {
-    router.push('/auth/login?redirect=/app/settings');
-    return <div />;
-  }
+  useEffect(() => {
+    if (!user) {
+      router.push('/auth/login?redirect=/app/settings');
+    }
+  }, [user, router]);
+
+  if (!user) return <div />;
 
   const handleExportData = async (): Promise<void> => {
     setExporting(true);
@@ -62,7 +66,7 @@ export default function SettingsPage(): JSX.Element {
       setMessage({ type: 'success', text: 'Semua data telah dihapus. Anda akan keluar.' });
       setTimeout(() => void signOut(), 2000);
     } catch {
-      setMessage({ type: 'error', text: 'Gagal menghapus data. Hubungi dpo@suratresmi.id.' });
+      setMessage({ type: 'error', text: 'Gagal menghapus data. Hubungi dpo@suratresmi.online.' });
     } finally {
       setDeleting(false);
     }
@@ -83,6 +87,9 @@ export default function SettingsPage(): JSX.Element {
           <h1 className="text-2xl font-bold text-gray-900 font-heading">Pengaturan Akun</h1>
           <p className="text-sm text-gray-500 mt-1">{user.email}</p>
         </div>
+
+        {/* Referral Program */}
+        <ReferralWidget />
 
         {/* Privacy & Data Section */}
         <div className="space-y-4">
@@ -204,8 +211,8 @@ export default function SettingsPage(): JSX.Element {
         <div className="text-center space-y-2 pt-4 border-t border-gray-100">
           <p className="text-xs text-gray-400">
             Pertanyaan tentang privasi? Hubungi DPO kami di{' '}
-            <a href="mailto:dpo@suratresmi.id" className="text-primary-500 underline">
-              dpo@suratresmi.id
+            <a href="mailto:dpo@suratresmi.online" className="text-primary-500 underline">
+              dpo@suratresmi.online
             </a>
           </p>
           <div className="flex items-center justify-center gap-4 text-xs text-gray-400">

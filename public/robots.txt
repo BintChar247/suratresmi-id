@@ -4,4 +4,4 @@ Disallow: /admin
 Disallow: /api/
 Disallow: /app/
 
-Sitemap: https://suratresmi.id/sitemap.xml
+Sitemap: https://suratresmi.online/sitemap.xml

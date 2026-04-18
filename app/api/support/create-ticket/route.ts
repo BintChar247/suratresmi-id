@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabaseAdmin } from '@/lib/supabaseAdmin';
+import { sendTicketConfirmationEmail } from '@/lib/email';
 
 type TicketCategory = 'payment' | 'letter_quality' | 'account' | 'bug' | 'legal' | 'other';
 type TicketPriority = 'low' | 'medium' | 'high' | 'urgent';
@@ -117,8 +118,16 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     metadata: { category, priority: ticket.priority },
   });
 
-  // 6. TODO: Send confirmation email via Resend
-  //    await sendTicketConfirmationEmail(user.email, ticket);
+  // 6. Send confirmation email (fire-and-forget — don't block the response)
+  if (user.email) {
+    void sendTicketConfirmationEmail({
+      email: user.email,
+      ticketId: ticket.id as string,
+      subject: subject.trim(),
+      category,
+      priority: ticket.priority as string,
+    }).catch((err) => console.error('Ticket email send failed:', err));
+  }
 
   return NextResponse.json(ticket, { status: 201 });
 }

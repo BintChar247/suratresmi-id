@@ -146,6 +146,13 @@ export function HelpWidget(): JSX.Element {
               Hubungi Support
             </Button>
 
+            <a
+              href="mailto:support@suratresmi.online"
+              className="block text-center text-xs text-gray-500 hover:text-primary-600"
+            >
+              atau email support@suratresmi.online
+            </a>
+
             {/* Ticket form */}
             {showForm && (
               form.submitted ? (

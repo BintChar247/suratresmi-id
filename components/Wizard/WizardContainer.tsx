@@ -6,6 +6,7 @@ import { WizardStep2 } from './Step2';
 import { WizardStep3 } from './Step3';
 import { WizardStep4 } from './Step4';
 import { useAuth } from '@/lib/auth-context';
+import { trackEvent } from '@/lib/analytics';
 
 type WizardStep = 1 | 2 | 3 | 4;
 
@@ -27,11 +28,16 @@ export function WizardContainer(): JSX.Element {
     ?? null;
 
   const handleNext = (data: Partial<WizardState>): void => {
-    setState((prev) => ({
-      ...prev,
-      ...data,
-      step: Math.min(4, prev.step + 1) as WizardStep,
-    }));
+    setState((prev) => {
+      const nextStep = Math.min(4, prev.step + 1) as WizardStep;
+      trackEvent('wizard_step_completed', {
+        from_step: prev.step,
+        to_step: nextStep,
+        type: data.type ?? prev.type,
+        subtype: data.subtype ?? prev.subtype,
+      });
+      return { ...prev, ...data, step: nextStep };
+    });
   };
 
   const handlePrev = (): void => {

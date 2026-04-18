@@ -4,7 +4,8 @@ import React, { useState } from 'react';
 import { Button } from '@/components/ui/Button';
 import { SecurityBadge } from '@/components/ui/SecurityBadge';
 import { useAuth } from '@/lib/auth-context';
-import { ChevronLeft, Download, RefreshCw, CheckCircle, AlertTriangle } from 'lucide-react';
+import { trackEvent } from '@/lib/analytics';
+import { ChevronLeft, Download, RefreshCw, CheckCircle, AlertTriangle, Share2 } from 'lucide-react';
 
 interface Step4Props {
   letter: string;
@@ -13,11 +14,25 @@ interface Step4Props {
 }
 
 export function WizardStep4({ letter, onPrev, onRestart }: Step4Props): JSX.Element {
-  const { accessToken } = useAuth();
+  const { accessToken, user } = useAuth();
   const [editedLetter, setEditedLetter] = useState(letter);
   const [downloading, setDownloading] = useState(false);
   const [downloadError, setDownloadError] = useState<string | null>(null);
   const isEdited = editedLetter !== letter;
+
+  const referralCode = user ? user.id.slice(0, 8) : null;
+  const referralLink = referralCode
+    ? `https://suratresmi.online/?ref=${referralCode}`
+    : 'https://suratresmi.online';
+
+  const handleShareViaWhatsApp = (): void => {
+    const text =
+      `Surat saya dibuat pakai SuratResmi.Online dalam 30 detik.\n\n` +
+      `Mau bikin surat kuasa, perjanjian, atau dokumen resmi? Gratis 3 surat pertama: ${referralLink}\n\n` +
+      `Saya juga dapat kredit bonus kalau kamu daftar lewat link saya.`;
+    trackEvent('share_clicked', { channel: 'whatsapp', surface: 'wizard_step4' });
+    window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank', 'noopener,noreferrer');
+  };
 
   const handleDownloadPDF = async (): Promise<void> => {
     setDownloading(true);
@@ -45,6 +60,7 @@ export function WizardStep4({ letter, onPrev, onRestart }: Step4Props): JSX.Elem
       a.download = 'surat-resmi.pdf';
       a.click();
       URL.revokeObjectURL(url);
+      trackEvent('pdf_downloaded', { edited: isEdited });
     } catch {
       setDownloadError('Gagal mengunduh PDF. Coba lagi.');
     } finally {
@@ -107,6 +123,16 @@ export function WizardStep4({ letter, onPrev, onRestart }: Step4Props): JSX.Elem
           Unduh PDF / Download
         </Button>
       </div>
+
+      {/* WhatsApp share — viral loop */}
+      <button
+        type="button"
+        onClick={handleShareViaWhatsApp}
+        className="w-full flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#1ebe57] text-white font-semibold py-3 rounded-lg transition-colors"
+      >
+        <Share2 size={16} />
+        Bagikan via WhatsApp — dapat kredit bonus
+      </button>
 
       <Button variant="secondary" fullWidth onClick={onRestart}>
         <RefreshCw size={16} className="mr-2" />

@@ -4,6 +4,7 @@ import React from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/lib/auth-context';
 import { Button } from '@/components/ui/Button';
+import { config } from '@/lib/config';
 
 interface AuthWallProps {
   children: React.ReactNode;
@@ -40,7 +41,7 @@ export function AuthWall({ children }: AuthWallProps): JSX.Element {
     );
   }
 
-  if (credits <= 0) {
+  if (config.billing.enabled && credits <= 0) {
     return (
       <div className="max-w-md mx-auto p-6 bg-gradient-to-br from-yellow-50 to-yellow-100 rounded-2xl border border-yellow-200">
         <h2 className="text-xl font-bold text-gray-900 mb-2">Kredit Habis</h2>

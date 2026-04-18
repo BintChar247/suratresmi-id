@@ -97,7 +97,7 @@ export default function PrivacyPage(): JSX.Element {
           Untuk permintaan hak subjek data atau pertanyaan mengenai pemrosesan data pribadi,
           hubungi:
         </p>
-        <p className="font-mono text-sm">dpo@suratresmi.id</p>
+        <p className="font-mono text-sm">dpo@suratresmi.online</p>
         <p className="text-sm text-gray-600">
           Kami wajib merespons dalam 30 hari kerja sesuai UU PDP No. 27/2022.
         </p>

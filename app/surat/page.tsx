@@ -6,7 +6,7 @@ import { getSupabaseAdmin } from '@/lib/supabaseAdmin';
 
 export const revalidate = 86400;
 
-const SITE_URL = 'https://suratresmi.id';
+const SITE_URL = 'https://suratresmi.online';
 
 const TYPE_LABELS: Record<string, string> = {
   kuasa: 'Surat Kuasa',
@@ -27,17 +27,17 @@ const TYPE_DESCRIPTIONS: Record<string, string> = {
 };
 
 export const metadata: Metadata = {
-  title: 'Semua Template Surat Resmi | SuratResmi.id',
+  title: 'Semua Template Surat Resmi | SuratResmi.Online',
   description:
     'Jelajahi 50+ template surat resmi Indonesia: surat kuasa, perjanjian kerja, jual beli, sewa, dan utang. Buat gratis dalam 30 detik.',
   alternates: { canonical: `${SITE_URL}/surat` },
   openGraph: {
     type: 'website',
     url: `${SITE_URL}/surat`,
-    title: 'Semua Template Surat Resmi | SuratResmi.id',
+    title: 'Semua Template Surat Resmi | SuratResmi.Online',
     description:
       'Jelajahi 50+ template surat resmi Indonesia. Buat gratis dalam 30 detik.',
-    siteName: 'SuratResmi.id',
+    siteName: 'SuratResmi.Online',
     locale: 'id_ID',
   },
   robots: { index: true, follow: true },

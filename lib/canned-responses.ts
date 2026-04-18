@@ -30,7 +30,7 @@ Jika sudah lebih dari 5 hari kerja dan belum diterima, hubungi kami dengan:
 2. Hapus cache browser
 3. Coba browser berbeda atau mode incognito
 
-Masih bermasalah? Kirim email/screenshot ke support@suratresmi.id`,
+Masih bermasalah? Kirim email/screenshot ke support@suratresmi.online`,
 } as const;
 
 export type CannedResponseKey = keyof typeof CANNED_RESPONSES;
