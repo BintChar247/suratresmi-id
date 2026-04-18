@@ -23,7 +23,8 @@ export function WizardStep1({ onNext }: Step1Props): JSX.Element {
         <h1 className="text-3xl font-bold text-gray-900 font-heading">
           Apa jenis surat yang Anda butuhkan?
         </h1>
-        <p className="mt-2 text-gray-500">Pilih salah satu dari kategori di bawah</p>
+        <p className="text-sm text-gray-400 italic mt-1">What type of letter do you need?</p>
+        <p className="mt-2 text-gray-500">Pilih salah satu dari kategori di bawah <span className="text-gray-400">/ Pick a category below</span></p>
       </div>
 
       <div className="grid grid-cols-1 gap-3 md:grid-cols-2">

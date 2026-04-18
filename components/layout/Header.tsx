@@ -18,7 +18,7 @@ export function Header(): JSX.Element {
         </Link>
         <nav className="flex items-center gap-4">
           <Link href="/terms" className="text-sm text-gray-500 hover:text-gray-700">
-            Bantuan
+            Bantuan <span className="text-gray-300 font-normal">/ Help</span>
           </Link>
         </nav>
       </div>

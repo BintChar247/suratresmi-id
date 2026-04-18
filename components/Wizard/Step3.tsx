@@ -138,11 +138,12 @@ export function WizardStep3({ subtype, onNext, onPrev }: Step3Props): JSX.Elemen
           className="flex items-center gap-1 text-primary-500 text-sm font-semibold mb-4 min-h-[2.75rem]"
         >
           <ChevronLeft size={16} />
-          Kembali
+          Kembali <span className="text-gray-400 font-normal">/ Back</span>
         </button>
         <h2 className="text-2xl font-bold text-gray-900 font-heading">
           Isi informasi yang diperlukan
         </h2>
+        <p className="text-sm text-gray-400 italic">Fill in the required information</p>
         {templateName && (
           <p className="mt-1 text-gray-500 text-sm">{templateName}</p>
         )}
@@ -183,11 +184,11 @@ export function WizardStep3({ subtype, onNext, onPrev }: Step3Props): JSX.Elemen
       {!loadingFields && fields.length > 0 && (
         <div className="pt-2 border-t border-gray-100 space-y-4">
           <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider">
-            Bagian Penutup Surat
+            Bagian Penutup Surat <span className="text-gray-300 normal-case tracking-normal">/ Letter Closing</span>
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <Input
-              label="Diberikan di"
+              label="Diberikan di / Given at"
               placeholder="Contoh: Jakarta"
               required
               maxLength={100}
@@ -201,7 +202,7 @@ export function WizardStep3({ subtype, onNext, onPrev }: Step3Props): JSX.Elemen
               }}
             />
             <Input
-              label="Tanggal"
+              label="Tanggal / Date"
               type="date"
               required
               error={errors['tanggal_pembuatan']}
@@ -221,7 +222,7 @@ export function WizardStep3({ subtype, onNext, onPrev }: Step3Props): JSX.Elemen
       {!loadingFields && fields.length > 0 && (
         <div className="flex flex-col gap-1">
           <label htmlFor="jumlah-saksi" className="text-sm font-semibold text-gray-700">
-            Saksi-Saksi (opsional)
+            Saksi-Saksi (opsional) <span className="text-gray-400 font-normal">/ Witnesses (optional)</span>
           </label>
           <select
             id="jumlah-saksi"
@@ -229,9 +230,9 @@ export function WizardStep3({ subtype, onNext, onPrev }: Step3Props): JSX.Elemen
             onChange={(e) => setJumlahSaksi(e.target.value)}
             className="px-4 py-3 border border-gray-300 rounded-lg text-base transition-colors focus:outline-none focus:border-primary-500 focus:ring-2 focus:ring-primary-200 min-h-[2.75rem] bg-white"
           >
-            <option value="0">Tanpa saksi</option>
-            <option value="1">1 saksi</option>
-            <option value="2">2 saksi</option>
+            <option value="0">Tanpa saksi / No witness</option>
+            <option value="1">1 saksi / 1 witness</option>
+            <option value="2">2 saksi / 2 witnesses</option>
           </select>
           <p className="text-sm text-gray-500">
             Jumlah saksi yang akan menandatangani surat
@@ -253,7 +254,7 @@ export function WizardStep3({ subtype, onNext, onPrev }: Step3Props): JSX.Elemen
       {!loadingFields && fields.length > 0 && (
         <div className="space-y-2">
           <Button type="submit" fullWidth size="lg" loading={loading}>
-            Buat Surat
+            Buat Surat / Generate Letter
           </Button>
           <div className="flex justify-center">
             <SecurityBadge variant="encrypted" />

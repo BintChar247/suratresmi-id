@@ -58,8 +58,11 @@ export function WizardStep4({ letter, onPrev, onRestart }: Step4Props): JSX.Elem
       <div className="text-center">
         <CheckCircle className="mx-auto text-success-500 mb-3" size={48} />
         <h2 className="text-2xl font-bold text-gray-900 font-heading">Surat Anda siap!</h2>
+        <p className="text-sm text-gray-400 italic mt-1">Your letter is ready!</p>
         <p className="text-gray-500 mt-2 text-sm">
           Lihat pratinjau di bawah, lalu unduh dalam format PDF
+          <br />
+          <span className="text-gray-400">Review below, then download as PDF</span>
         </p>
       </div>
 
@@ -67,7 +70,7 @@ export function WizardStep4({ letter, onPrev, onRestart }: Step4Props): JSX.Elem
       <div className="relative">
         {isEdited && (
           <span className="absolute top-2 right-2 text-xs text-primary-600 bg-primary-50 px-2 py-0.5 rounded-full">
-            Diubah
+            Diubah / Edited
           </span>
         )}
         <textarea
@@ -101,13 +104,13 @@ export function WizardStep4({ letter, onPrev, onRestart }: Step4Props): JSX.Elem
         </Button>
         <Button fullWidth loading={downloading} onClick={() => void handleDownloadPDF()}>
           <Download size={16} className="mr-1" />
-          Unduh PDF
+          Unduh PDF / Download
         </Button>
       </div>
 
       <Button variant="secondary" fullWidth onClick={onRestart}>
         <RefreshCw size={16} className="mr-2" />
-        Buat Surat Lain
+        Buat Surat Lain / Create Another
       </Button>
 
       {/* Security assurance */}

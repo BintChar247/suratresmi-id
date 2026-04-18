@@ -55,12 +55,13 @@ export function WizardStep2({ type, onNext, onPrev }: Step2Props): JSX.Element {
           className="flex items-center gap-1 text-primary-500 text-sm font-semibold mb-4 min-h-[2.75rem]"
         >
           <ChevronLeft size={16} />
-          Kembali
+          Kembali <span className="text-gray-400 font-normal">/ Back</span>
         </button>
         <h2 className="text-2xl font-bold text-gray-900 font-heading">
           Pilih jenis {TYPE_LABELS[type] ?? type}
         </h2>
-        <p className="mt-1 text-gray-500 text-sm">Pilih yang paling sesuai dengan kebutuhan Anda</p>
+        <p className="text-sm text-gray-400 italic mt-1">Choose a specific {TYPE_LABELS[type] ?? type}</p>
+        <p className="mt-1 text-gray-500 text-sm">Pilih yang paling sesuai dengan kebutuhan Anda <span className="text-gray-400">/ Pick what fits your need</span></p>
       </div>
 
       {loading && (

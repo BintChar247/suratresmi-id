@@ -62,15 +62,17 @@ export default function Home(): JSX.Element {
                 <div className="flex flex-col sm:flex-row gap-3 justify-center md:justify-start">
                   <Link
                     href="/app"
-                    className="inline-flex items-center justify-center bg-primary-500 text-white font-semibold text-lg px-8 py-4 rounded-lg hover:bg-primary-600 transition-colors shadow-md hover:shadow-lg"
+                    className="inline-flex flex-col items-center justify-center bg-primary-500 text-white font-semibold px-8 py-3 rounded-lg hover:bg-primary-600 transition-colors shadow-md hover:shadow-lg"
                   >
-                    Mulai Buat Surat
+                    <span className="text-lg leading-tight">Mulai Buat Surat</span>
+                    <span className="text-xs font-normal text-primary-100">Start Now</span>
                   </Link>
                   <a
                     href="#cara-kerja"
-                    className="inline-flex items-center justify-center bg-white text-primary-600 font-semibold text-base px-6 py-4 rounded-lg border-2 border-primary-200 hover:border-primary-400 hover:bg-primary-50 transition-colors"
+                    className="inline-flex flex-col items-center justify-center bg-white text-primary-600 font-semibold px-6 py-3 rounded-lg border-2 border-primary-200 hover:border-primary-400 hover:bg-primary-50 transition-colors"
                   >
-                    Lihat Cara Kerja
+                    <span className="text-base leading-tight">Lihat Cara Kerja</span>
+                    <span className="text-xs font-normal text-primary-400">See How It Works</span>
                   </a>
                 </div>
 
@@ -288,14 +290,18 @@ export default function Home(): JSX.Element {
             <h2 className="text-2xl md:text-3xl font-bold text-gray-900 font-heading">
               Sudah siap buat surat?
             </h2>
+            <p className="text-sm text-gray-400 italic -mt-4">Ready to create your letter?</p>
             <p className="text-gray-500">
               Gratis, cepat, dan langsung jadi PDF. Tanpa perlu daftar akun.
+              <br />
+              <span className="text-sm text-gray-400">Free, fast, and instant PDF. No signup required.</span>
             </p>
             <Link
               href="/app"
-              className="inline-flex items-center justify-center w-full sm:w-auto bg-primary-500 text-white font-semibold text-lg px-10 py-4 rounded-lg hover:bg-primary-600 transition-colors shadow-md hover:shadow-lg"
+              className="inline-flex flex-col items-center justify-center w-full sm:w-auto bg-primary-500 text-white font-semibold px-10 py-3 rounded-lg hover:bg-primary-600 transition-colors shadow-md hover:shadow-lg"
             >
-              Mulai Buat Surat — Gratis
+              <span className="text-lg leading-tight">Mulai Buat Surat — Gratis</span>
+              <span className="text-xs font-normal text-primary-100">Start for Free</span>
             </Link>
             <p className="text-xs text-gray-400">
               Tidak perlu kartu kredit. 3 surat pertama gratis.
