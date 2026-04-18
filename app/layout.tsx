@@ -1,5 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import { AuthProvider } from '@/lib/auth-context';
+import { HelpWidget } from '@/components/HelpWidget';
+import { ConsentBanner } from '@/components/ConsentBanner';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -24,6 +26,8 @@ export default function RootLayout({
       <body className="bg-white text-gray-900 font-sans antialiased">
         <AuthProvider>
           <div className="min-h-screen flex flex-col">{children}</div>
+          <HelpWidget />
+          <ConsentBanner />
         </AuthProvider>
       </body>
     </html>

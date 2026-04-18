@@ -4,6 +4,8 @@ import { supabaseAdmin } from '@/lib/supabaseAdmin';
 import { checkUserRateLimit } from '@/lib/rateLimit';
 import { sanitizeInput } from '@/lib/security';
 import { encrypt, encryptJSON } from '@/lib/encryption';
+import { scanLetterOutput } from '@/lib/moderation';
+import { config } from '@/lib/config';
 
 // ─── Constants ───────────────────────────────────────────────────────────────
 
@@ -258,7 +260,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     userData = created;
   }
 
-  if (userData.credits < 1) {
+  if (config.billing.enabled && userData.credits < 1) {
     return NextResponse.json(
       { error: 'Kredit tidak cukup. Silakan beli paket kredit.' },
       { status: 402 }
@@ -348,35 +350,42 @@ atau "[tempat_pembuatan], [tanggal_pembuatan]"). Format tanggal dalam bahasa Ind
     );
   }
 
-  // 11. Atomically debit 1 credit — RPC uses SELECT FOR UPDATE to prevent races
-  const { data: debitResult, error: debitError } = await supabaseAdmin.rpc('debit_credit', {
-    p_user_id: userId,
-    p_amount: 1,
-  });
+  // 11. Atomically debit 1 credit — RPC uses SELECT FOR UPDATE to prevent races.
+  //     Gated on billing flag: during the free-launch phase we skip the debit entirely.
+  let creditsRemaining = userData.credits;
+  if (config.billing.enabled) {
+    const { data: debitResult, error: debitError } = await supabaseAdmin.rpc('debit_credit', {
+      p_user_id: userId,
+      p_amount: 1,
+    });
 
-  if (debitError) {
-    if (debitError.message?.includes('Insufficient credits')) {
-      return NextResponse.json(
-        { error: 'Kredit tidak cukup. Silakan beli paket kredit.' },
-        { status: 402 }
-      );
+    if (debitError) {
+      if (debitError.message?.includes('Insufficient credits')) {
+        return NextResponse.json(
+          { error: 'Kredit tidak cukup. Silakan beli paket kredit.' },
+          { status: 402 }
+        );
+      }
+      console.error('debit_credit RPC error:', debitError);
+      return NextResponse.json({ error: 'Gagal memproses kredit.' }, { status: 500 });
     }
-    console.error('debit_credit RPC error:', debitError);
-    return NextResponse.json({ error: 'Gagal memproses kredit.' }, { status: 500 });
+
+    creditsRemaining =
+      (debitResult as { credits_remaining: number } | null)?.credits_remaining ?? 0;
+
+    void supabaseAdmin.from('transactions').insert({
+      user_id: userId,
+      type: 'debit',
+      credits_delta: -1,
+      status: 'success',
+    });
   }
 
-  const creditsRemaining =
-    (debitResult as { credits_remaining: number } | null)?.credits_remaining ?? 0;
+  // 12. Heuristic content moderation — flag for manual review but do not block
+  const moderation = scanLetterOutput(generatedText);
 
-  // 12–14. Non-blocking fire-and-forget persistence (failures don't break the response)
+  // 13–14. Non-blocking fire-and-forget persistence (failures don't break the response)
   const letterType = SUBTYPE_TO_LETTER_TYPE[subtype] ?? 'surat_jual';
-
-  void supabaseAdmin.from('transactions').insert({
-    user_id: userId,
-    type: 'debit',
-    credits_delta: -1,
-    status: 'success',
-  });
 
   void supabaseAdmin.from('letters').insert({
     user_id: userId,
@@ -385,16 +394,23 @@ atau "[tempat_pembuatan], [tanggal_pembuatan]"). Format tanggal dalam bahasa Ind
     content: encrypt(generatedText),
     input_data: encryptJSON(sanitizedFields),
     api_tokens_used: tokensUsed,
-    flagged: false,
+    flagged: moderation.flagged,
+    flag_reason: moderation.reason ?? null,
   });
 
   void supabaseAdmin.from('audit_log').insert({
     actor_id: userId,
     actor_type: 'user',
-    action: 'letter_generate',
+    action: moderation.flagged ? 'letter_generate_flagged' : 'letter_generate',
     resource_type: 'letter',
     resource_id: '00000000-0000-0000-0000-000000000000',
-    metadata: { subtype, tokens_used: tokensUsed },
+    metadata: {
+      subtype,
+      tokens_used: tokensUsed,
+      ...(moderation.flagged
+        ? { flag_reason: moderation.reason, severity: moderation.severity }
+        : {}),
+    },
   });
 
   // 15. Return result

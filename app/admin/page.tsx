@@ -89,10 +89,91 @@ export default function AdminDashboard(): JSX.Element {
       </div>
 
       <UserManagement supabase={supabase} />
+      <FlaggedLetters supabase={supabase} />
       <PaymentDisputes supabase={supabase} />
       <ErrorLog />
       <CreditGrants supabase={supabase} />
     </div>
+  );
+}
+
+interface FlaggedRow {
+  id: string;
+  user_id: string;
+  subtype_id: string;
+  flag_reason: string | null;
+  created_at: string;
+}
+
+function FlaggedLetters({ supabase }: { supabase: ReturnType<typeof createBrowserClient> }): JSX.Element {
+  const [rows, setRows] = useState<FlaggedRow[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const load = async () => {
+      const { data } = await supabase
+        .from('letters')
+        .select('id, user_id, subtype_id, flag_reason, created_at')
+        .eq('flagged', true)
+        .order('created_at', { ascending: false })
+        .limit(50);
+      setRows((data as FlaggedRow[]) || []);
+      setLoading(false);
+    };
+    load();
+  }, [supabase]);
+
+  const clearFlag = async (id: string) => {
+    await supabase.from('letters').update({ flagged: false, flag_reason: null }).eq('id', id);
+    setRows((prev) => prev.filter((r) => r.id !== id));
+  };
+
+  return (
+    <section className="bg-white p-6 rounded-lg shadow">
+      <h2 className="text-xl font-bold mb-4">
+        Flagged Letters{' '}
+        <span className="text-sm font-normal text-gray-500">({rows.length} pending review)</span>
+      </h2>
+      {loading ? (
+        <p className="text-gray-500">Memuat...</p>
+      ) : rows.length === 0 ? (
+        <p className="text-gray-500">Tidak ada surat yang ditandai.</p>
+      ) : (
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="text-left border-b">
+                <th className="pb-2">Letter ID</th>
+                <th className="pb-2">User</th>
+                <th className="pb-2">Subtype</th>
+                <th className="pb-2">Reason</th>
+                <th className="pb-2">Date</th>
+                <th className="pb-2">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {rows.map((r) => (
+                <tr key={r.id} className="border-b">
+                  <td className="py-2 font-mono text-xs">{r.id.slice(0, 8)}</td>
+                  <td className="py-2 font-mono text-xs">{r.user_id.slice(0, 8)}</td>
+                  <td className="py-2">{r.subtype_id}</td>
+                  <td className="py-2 text-amber-700">{r.flag_reason ?? '—'}</td>
+                  <td className="py-2">{new Date(r.created_at).toLocaleDateString('id-ID')}</td>
+                  <td className="py-2">
+                    <button
+                      onClick={() => clearFlag(r.id)}
+                      className="text-green-700 text-xs hover:underline"
+                    >
+                      Clear flag
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </section>
   );
 }
 
