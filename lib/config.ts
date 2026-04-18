@@ -3,6 +3,9 @@ export const config = {
     url: process.env.NEXT_PUBLIC_SUPABASE_URL!,
     anonKey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
   },
+  billing: {
+    enabled: process.env.NEXT_PUBLIC_BILLING_ENABLED === 'true',
+  },
   midtrans: {
     serverKey: process.env.MIDTRANS_SERVER_KEY!,
     clientKey: process.env.NEXT_PUBLIC_MIDTRANS_CLIENT_KEY!,
