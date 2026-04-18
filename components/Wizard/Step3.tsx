@@ -26,6 +26,14 @@ interface Step3Props {
   onPrev: () => void;
 }
 
+const todayISO = (): string => {
+  const d = new Date();
+  const yyyy = d.getFullYear();
+  const mm = String(d.getMonth() + 1).padStart(2, '0');
+  const dd = String(d.getDate()).padStart(2, '0');
+  return `${yyyy}-${mm}-${dd}`;
+};
+
 export function WizardStep3({ subtype, onNext, onPrev }: Step3Props): JSX.Element {
   const { user, accessToken } = useAuth();
   const router = useRouter();
@@ -34,6 +42,8 @@ export function WizardStep3({ subtype, onNext, onPrev }: Step3Props): JSX.Elemen
   const [formData, setFormData] = useState<Record<string, string>>({});
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [jumlahSaksi, setJumlahSaksi] = useState('2');
+  const [tempatPembuatan, setTempatPembuatan] = useState('');
+  const [tanggalPembuatan, setTanggalPembuatan] = useState(todayISO());
   const [loading, setLoading] = useState(false);
   const [loadingFields, setLoadingFields] = useState(true);
   const [apiError, setApiError] = useState<string | null>(null);
@@ -63,6 +73,12 @@ export function WizardStep3({ subtype, onNext, onPrev }: Step3Props): JSX.Elemen
         newErrors[field.key] = `${field.label_id} wajib diisi`;
       }
     });
+    if (!tempatPembuatan.trim()) {
+      newErrors['tempat_pembuatan'] = 'Tempat wajib diisi';
+    }
+    if (!tanggalPembuatan.trim()) {
+      newErrors['tanggal_pembuatan'] = 'Tanggal wajib diisi';
+    }
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -86,7 +102,15 @@ export function WizardStep3({ subtype, onNext, onPrev }: Step3Props): JSX.Elemen
           'Content-Type': 'application/json',
           Authorization: `Bearer ${accessToken}`,
         },
-        body: JSON.stringify({ subtype, fields: { ...formData, jumlah_saksi: jumlahSaksi } }),
+        body: JSON.stringify({
+          subtype,
+          fields: {
+            ...formData,
+            jumlah_saksi: jumlahSaksi,
+            tempat_pembuatan: tempatPembuatan,
+            tanggal_pembuatan: tanggalPembuatan,
+          },
+        }),
       });
 
       if (!response.ok) {
@@ -154,6 +178,44 @@ export function WizardStep3({ subtype, onNext, onPrev }: Step3Props): JSX.Elemen
           }}
         />
       ))}
+
+      {/* Tempat & Tanggal Pembuatan (closing section) */}
+      {!loadingFields && fields.length > 0 && (
+        <div className="pt-2 border-t border-gray-100 space-y-4">
+          <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider">
+            Bagian Penutup Surat
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <Input
+              label="Diberikan di"
+              placeholder="Contoh: Jakarta"
+              required
+              maxLength={100}
+              error={errors['tempat_pembuatan']}
+              value={tempatPembuatan}
+              onChange={(e) => {
+                setTempatPembuatan(e.target.value);
+                if (errors['tempat_pembuatan']) {
+                  setErrors((prev) => { const next = { ...prev }; delete next['tempat_pembuatan']; return next; });
+                }
+              }}
+            />
+            <Input
+              label="Tanggal"
+              type="date"
+              required
+              error={errors['tanggal_pembuatan']}
+              value={tanggalPembuatan}
+              onChange={(e) => {
+                setTanggalPembuatan(e.target.value);
+                if (errors['tanggal_pembuatan']) {
+                  setErrors((prev) => { const next = { ...prev }; delete next['tanggal_pembuatan']; return next; });
+                }
+              }}
+            />
+          </div>
+        </div>
+      )}
 
       {/* Saksi-Saksi (optional) */}
       {!loadingFields && fields.length > 0 && (
